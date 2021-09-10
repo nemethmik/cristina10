@@ -1,0 +1,33 @@
+{
+  "name": "tsorchids",
+  "version": "1.0.0",
+  "description": "TypeScript Variant of JHerr Orchid ESM sample",
+  "main": "dist/index.js",
+  "scripts": {
+    "start":"tsc --watch",
+    "build":"tsc",
+    "fix":"eslint src --fix",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nemethmik/cristina10.git"
+  },
+  "keywords": [
+    "typescript",
+    "browser",
+    "modules"
+  ],
+  "author": "Miklos Nemeth",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nemethmik/cristina10/issues"
+  },
+  "homepage": "https://github.com/nemethmik/cristina10#readme",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.31.0",
+    "@typescript-eslint/parser": "^4.31.0",
+    "eslint": "^7.32.0",
+    "typescript": "^4.4.2"
+  }
+}
