@@ -1,6 +1,11 @@
 # cristina10
 A multi-project (aka mono) repo for TypeScript web server, front-end and database applications (Chirichella)
 
+## Web Components
+After tsorchid I started experimenting with web components.
+For remaking [JH Web Components - 1 - Custom Elements, Templates and the Shadow DOM, 2019](https://youtu.be/_Tr9ZcXcMjQ) I kept the tsorchids project. I renamed the original index.ts and index.html 
+
+
 ## tsorchids
 This is a remake of [Jack Herrington Javascript Modules in detail - Part 1](https://youtu.be/mMB8DNLotDs)
 
@@ -129,6 +134,9 @@ He used the default function passing all the attribute object. This is a great e
 This is a pretty neat dynamic custom module loader implementation.
 What is not really elegant in the solution is the hard-coded URL's in the component JavaScript codes
 `import { getStore } from 'http://localhost:4001/framework.js'`
+
+
+
 
 ## Other Videos Worth Watching
 - 

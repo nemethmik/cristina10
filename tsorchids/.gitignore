@@ -80,7 +80,9 @@ typings/
 
 # Nuxt.js build / generate output
 .nuxt
-dist
+# In this project I need some files from dist, but I don't need the tsc-compiled *.js files 
+#dist 
+dist/*.js
 
 # Gatsby files
 .cache/
