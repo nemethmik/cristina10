@@ -22,5 +22,4 @@ export const createBuytools = (el:HTMLElement,store:IStore):void => {
     store.subscribe((ev:TStoreEventType) => {
         if(ev == "ImageSet") (document.getElementById(ORCHIDIMAGE)! as HTMLImageElement).src = store.getImage()
     })
-
 }
