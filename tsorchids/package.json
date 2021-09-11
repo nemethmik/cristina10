@@ -7,6 +7,7 @@
     "start":"tsc --watch",
     "build":"tsc",
     "fix":"eslint src --fix",
+    "s4000":"npx servor dist index.html 4000 --browse --reload",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

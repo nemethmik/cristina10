@@ -6,7 +6,7 @@ export const createHeader = (el:HTMLElement,store:IStore):void => {
     <div class="mui-container">
         <table width="100%">
         <tr class="mui--appbar-height">
-            <td class="mui--text-title">ESM Micro-FE</td>
+            <td class="mui--text-title">ESM Micro-FrontEnd</td>
             <td class="mui--text-right">
             Cart Count: <span id="${COUNTID}"></span>
             </td>
