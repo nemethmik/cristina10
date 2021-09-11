@@ -1,5 +1,5 @@
 import { IStore,TStoreEventHandler} from "./istore"
-// Thi is a very tricky solution, actually a well documented practical application of JavaScript closures 
+// This is a very tricky solution, actually a well documented practical application of JavaScript closures 
 // see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures#emulating_private_methods_with_closures
 /*
 const createStore = ():IStore => {

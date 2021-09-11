@@ -3,8 +3,13 @@ A multi-project (aka mono) repo for TypeScript web server, front-end and databas
 
 ## tsorchids
 This is a remake of [Jack Herrington Javascript Modules in detail - Part 1](https://youtu.be/mMB8DNLotDs)
+
+Here is my quite lengthy explanation of almost every line 
+[No-framework, no-bundler TypeScript WebApplication Development 01 JH's Orchids Sample Remake](https://youtu.be/9lM5e983mnQ).
+
 The basic idea is to use only **tsc** for building the application.
 Here are the steps how to initialize the project. See my other projcet [alessia8](https://github.com/nemethmik/alessia8) how to configure ESLint for TypeScript
+- npm init
 - npm i -D typescript eslint
 - npx tsc --init
     - "target": "ESNext", 
