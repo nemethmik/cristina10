@@ -1,15 +1,16 @@
 # cristina10
 A multi-project (aka mono) repo for TypeScript web server, front-end and database applications (Chirichella)
 
-## Web Components
+## tswebcomp
 After the *tsorchids* remake, I started experimenting with web componentsfoloowing [JH Web Components Custom Elements, Templates and the Shadow DOM, 2019](https://youtu.be/_Tr9ZcXcMjQ) and the subsequent two parts.
-I kept the *tsorchids* project. I renamed the original *index.ts* and *index.html* 
 
-- **npm run s4000** from the *tsorchids* project home folder to start *servor* on the *dist/index.html*
-Alternatively you can start the fantastic *Live Server* Visula Studio Code extension on dist/index.html, too, of course. 
-
+I kept the *tsorchids* project, and I created a new folder *tswebcomp*. This project had only *src/index.ts* and *dist/index.html* 
+I copied the files package.json (changed the project name and description), .eslintrc, tsconfig.json and .gitignore. 
 I changed *.gitignore*, not to exclude the entire *dist* folder, just ignore `dist/*.js`
 
+After cloning, the steps are exactly the same as in *tsorchids* project, but the project root folder is *tswebcomp*, of course.
+
+For the full explanation of the videos, firts JHerr's then mine.
 Here are the main points when working with web components:
 - What is the difference between an open and closed shadow root? Here is a nice explanation [open-vs-closed-shadow-dom](https://blog.revillweb.com/open-vs-closed-shadow-dom-9f3d7427d1af)
   - The short answer is that with close shadow root, you should use the object returned by the *attachShadow* function and use that for building the shadow DOM.
@@ -40,6 +41,12 @@ declare global {
 
 ## tsorchids
 This is a remake of [Jack Herrington Javascript Modules in detail - Part 1](https://youtu.be/mMB8DNLotDs)
+
+After cloning, 
+- *cd tsorchids* this is the project home/root folder
+- *npm install* to install the npm packages based on package.json
+- *npm start* to start tsc --watch to compile-watch the TypeScript sources into the dist folder. 
+- in another terminal window *npm run s4000* to start servor upon dist/index.html, or you can use Live Server, too.
 
 Here is my quite lengthy explanation of almost every line 
 [No-framework, no-bundler TypeScript WebApplication Development 01 JH's Orchids Sample Remake](https://youtu.be/9lM5e983mnQ).
@@ -166,9 +173,6 @@ He used the default function passing all the attribute object. This is a great e
 This is a pretty neat dynamic custom module loader implementation.
 What is not really elegant in the solution is the hard-coded URL's in the component JavaScript codes
 `import { getStore } from 'http://localhost:4001/framework.js'`
-
-
-
 
 ## Other Videos Worth Watching
 - 

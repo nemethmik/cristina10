@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Components</title>
+    <style>
+        h2{color:blue;}
+    </style>
+</head>
+<body>
+    <script>
+        const myProduct = () => document.querySelector("my-product")
+    </script>
+    <h2>Product Details Page</h2>
+    <button onclick="myProduct().name = 'iPhone7'" id="changeproduct">Change Product</button>  
+    <button onclick="myProduct().hide()" id="hideproduct">Hide</button>  
+    <button onclick="myProduct().show()" id="showproduct">Show</button>  
+    <!-- onbuy="alert('Buy Me, Please!')" doesn't work -->
+    <my-product name="Note8" style="font-size: xx-large;">
+        <span slot="price">$560</span>
+        <h2>One of the best smartphones ever.</h2>
+    </my-product> 
+    <script>
+       myProduct().addEventListener("buy",()=>alert('Buy Me, Please!'))
+    </script>
+</body>
+<script type="module" src="./index.js"></script>
+</html>
