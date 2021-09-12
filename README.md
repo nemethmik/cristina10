@@ -2,9 +2,41 @@
 A multi-project (aka mono) repo for TypeScript web server, front-end and database applications (Chirichella)
 
 ## Web Components
-After tsorchid I started experimenting with web components.
-For remaking [JH Web Components - 1 - Custom Elements, Templates and the Shadow DOM, 2019](https://youtu.be/_Tr9ZcXcMjQ) I kept the tsorchids project. I renamed the original index.ts and index.html 
+After the *tsorchids* remake, I started experimenting with web componentsfoloowing [JH Web Components Custom Elements, Templates and the Shadow DOM, 2019](https://youtu.be/_Tr9ZcXcMjQ) and the subsequent two parts.
+I kept the *tsorchids* project. I renamed the original *index.ts* and *index.html* 
 
+- **npm run s4000** from the *tsorchids* project home folder to start *servor* on the *dist/index.html*
+Alternatively you can start the fantastic *Live Server* Visula Studio Code extension on dist/index.html, too, of course. 
+
+I changed *.gitignore*, not to exclude the entire *dist* folder, just ignore `dist/*.js`
+
+Here are the main points when working with web components:
+- What is the difference between an open and closed shadow root? Here is a nice explanation [open-vs-closed-shadow-dom](https://blog.revillweb.com/open-vs-closed-shadow-dom-9f3d7427d1af)
+  - The short answer is that with close shadow root, you should use the object returned by the *attachShadow* function and use that for building the shadow DOM.
+- *Slots* work only in the shadow DOM.
+- You can build custom elements (aka web components) with Bootstrap, too, without using the shadow DOM, but then you will not have slots and all the styling is cascading through the components in the elements defined in the innerHTML of the custom element.
+- You cannot use *input* elements from the shadow DOM in combination with an outside *form*.
+- All methods defined in the class (render, show, hide in our example) is fully accessible to the users from the web page.
+- If your *attributeChangedCallback* is not fired, possibly you have forgotten to define the static *observedAttributes*
+- Attributes are standard feature of every HTML element, and they can be accessed with *getAttribute* and *setAttribute*, but the browser will not generate any getter/setter for them automatically; this is your job to define getter/setter properties. You can have properties without attributes, and you can have attributes without properties, and you can link them as demonstrated in this example.
+- Using the standard *template* element is totally optional, slots work without templates, too. But, cloning a template is a lot faster than rendering a HTML string for hungreds of elements in a scrolling list for example.
+- Event handler functions that are defined with the classic *method* way have to be bounded when added to an event listener. Event handlers defined with *lamda* syntax are automatically bounded to the *this* keyword of the class.
+  - If your event handler doesn't fire, check the handler function definition syntax and binding.
+- There is no such a thing as render callback function. 
+- Here are the (lifecycle) callbacks:
+  - constructor [Lifecycle Callbacks](https://levelup.gitconnected.com/creating-web-components-lifecycle-callbacks-5b6ffa48a8d5) suggest not to do any rendering and data fetching in the constructor it should be done in the *connectedCallback*
+  - connectedCallback
+  - disconnectedCallback
+  - attributeChangedCallback
+- As for *HTMLElementTagNameMap* see [typescriptlang/dom-manipulation](https://www.typescriptlang.org/docs/handbook/dom-manipulation.html) 
+When a lit-element project is created with Vite (see my elena14/elana14lit branch), a declaration section is generated at the bottom of the web component class TS file. 
+```TypeScript
+declare global {
+    interface HTMLElementTagNameMap {
+      "my-product": MyProduct
+    }
+}
+```
 
 ## tsorchids
 This is a remake of [Jack Herrington Javascript Modules in detail - Part 1](https://youtu.be/mMB8DNLotDs)
