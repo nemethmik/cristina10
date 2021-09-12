@@ -1,3 +1,7 @@
+export type TProductDetails = {
+    name: string,
+    price: number,
+}
 // function changeProduct():void {
 //     console.log("Change Product Clicked")
 //     document.querySelector("my-product")?.setAttribute("name","iPhone7")
@@ -12,7 +16,7 @@ const templString = /*html*/`
 ` 
 const template = document.createElement("template")
 template.innerHTML = templString
-export class MyProduct extends HTMLElement {
+class MyProduct extends HTMLElement {
     // static t2 = document.createElement("template")
     // This syntax doesn't seem to work in browsers :-()
     // static {
@@ -42,13 +46,14 @@ export class MyProduct extends HTMLElement {
     // Lambda-syntax event handler functions are automatically bound to the class, no need to bind them
     buyMeButtonClick = (ev:Event):void => {
         console.log(`Button ${(ev.target as HTMLButtonElement).innerText} clicked`)
-        this.dispatchEvent(new Event("buy",{}))
+        const productDetails:TProductDetails = {name:this.name, price:854.5}
+        this.dispatchEvent(new CustomEvent("buy",{detail:productDetails}))
     }
     connectedCallback():void {
         console.log("connectedCallback:in",this.getAttribute("name"))
-        this.shadowRoot!.innerHTML = templString //defined above the class.
-        // Using TEmplate is the more standard way
-        // this.shadowRoot?.appendChild(template.content.cloneNode(true))
+        //this.shadowRoot!.innerHTML = templString //defined above the class.
+        // Using Template is the more standard way
+        this.shadowRoot?.appendChild(template.content.cloneNode(true))
         //Binding is very important for method functions otherwise the function will be attached to the button not to this class
         //this.shadowRoot?.querySelector("button")?.addEventListener("click",this.buyMeButtonClick.bind(this))
         //No need when function is defined with lambda syntax
@@ -57,12 +62,14 @@ export class MyProduct extends HTMLElement {
         this.render()
         console.log("connectedCallback:out",this.getAttribute("name"))
     }
-    disconnectedCallback():void {
+    disconnectedCallback():void { // I don't see why it is important?
         this.shadowRoot?.querySelector("button")?.removeEventListener("click",this.buyMeButtonClick)
     }
     render():void { // Not a callback, this is just my function
         const h2 = this.shadowRoot?.querySelector("h2")
-        if(h2) h2.innerText += this.getAttribute("name")
+        // if(h2) h2.innerText += this.getAttribute("name")
+        //const n = this.getAttribute("name")
+        if(h2 /*&& n*/) h2.innerText = this.name
     }
     attributeChangedCallback(/*name:string,oldValue:string,newValue:string*/):void {
         console.log("attributeChangedCallback")

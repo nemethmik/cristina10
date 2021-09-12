@@ -4,6 +4,8 @@ A multi-project (aka mono) repo for TypeScript web server, front-end and databas
 ## tswebcomp
 After the *tsorchids* remake, I started experimenting with web componentsfoloowing [JH Web Components Custom Elements, Templates and the Shadow DOM, 2019](https://youtu.be/_Tr9ZcXcMjQ) and the subsequent two parts.
 
+Here is my eloquent explanation video [Web Component (Custom Element) Fundamentals with TypeScript](https://youtu.be/RjpoiFdEBWs).
+
 I kept the *tsorchids* project, and I created a new folder *tswebcomp*. This project had only *src/index.ts* and *dist/index.html* 
 I copied the files package.json (changed the project name and description), .eslintrc, tsconfig.json and .gitignore. 
 I changed *.gitignore*, not to exclude the entire *dist* folder, just ignore `dist/*.js`
@@ -17,10 +19,38 @@ Here are the main points when working with web components:
 - *Slots* work only in the shadow DOM.
 - You can build custom elements (aka web components) with Bootstrap, too, without using the shadow DOM, but then you will not have slots and all the styling is cascading through the components in the elements defined in the innerHTML of the custom element.
 - You cannot use *input* elements from the shadow DOM in combination with an outside *form*.
+  - You have to add *fordata* event listener and then : (for more details see [formdata-event example](https://glitch.com/edit/#!/formdata-event?path=custom-input.js%3A5%3A3))
+  Apple browsers don't support fordata events. Fortnately Apple is not relevant for business applications, and Chrome is available on all Apple platforms.
+    ```JavaScript
+    handleFormData({formData}) {
+      // add our name and value to the form's submission data if we're not disabled
+      if (!this.input.disabled) {
+        // https://developer.mozilla.org/en-US/docs/Web/API/FormData
+        formData.append(this.input.name, this.input.value);
+      }
+    }    
+    // find the <form>, and attach the `formdata` listener
+    connectedCallback() {
+      this._form = this.findContainingForm();
+      if (this._form) {
+        this._form.addEventListener('formdata', this._handleFormData);
+      }
+    }
+    // remove the `formdata` listener if we're removed
+    disconnectedCallback() {
+      if (this._form) {
+        this._form.removeEventListener('formdata', this._handleFormData);
+        this._form = null;
+      }
+    }
+    ```
 - All methods defined in the class (render, show, hide in our example) is fully accessible to the users from the web page.
 - If your *attributeChangedCallback* is not fired, possibly you have forgotten to define the static *observedAttributes*
 - Attributes are standard feature of every HTML element, and they can be accessed with *getAttribute* and *setAttribute*, but the browser will not generate any getter/setter for them automatically; this is your job to define getter/setter properties. You can have properties without attributes, and you can have attributes without properties, and you can link them as demonstrated in this example.
-- Using the standard *template* element is totally optional, slots work without templates, too. But, cloning a template is a lot faster than rendering a HTML string for hungreds of elements in a scrolling list for example.
+- Using the standard *template* element gives the possibility that the user can define and customize the template on the HTML page without interferring the layout, since the browser doesn't render at all a template; a template is meant tor the web component developers to be rendered with JavaScript.
+See [Using_templates_and_slots](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_templates_and_slots) 
+A major limitation is that a template has no machinery to generate parts dynamically. You can use regular JavaScript template literals with the placeholder expressions to create the inner text of templates, but gives no HTML diffing virtual dom feature, unlike the brilliant lit-html.  
+  - Slots work without templates, too. But, cloning a template is a lot faster than rendering a HTML string for hungreds of elements in a scrolling list for example.
 - Event handler functions that are defined with the classic *method* way have to be bounded when added to an event listener. Event handlers defined with *lamda* syntax are automatically bounded to the *this* keyword of the class.
   - If your event handler doesn't fire, check the handler function definition syntax and binding.
 - There is no such a thing as render callback function. 
@@ -31,13 +61,20 @@ Here are the main points when working with web components:
   - attributeChangedCallback
 - As for *HTMLElementTagNameMap* see [typescriptlang/dom-manipulation](https://www.typescriptlang.org/docs/handbook/dom-manipulation.html) 
 When a lit-element project is created with Vite (see my elena14/elana14lit branch), a declaration section is generated at the bottom of the web component class TS file. 
-```TypeScript
-declare global {
-    interface HTMLElementTagNameMap {
-      "my-product": MyProduct
-    }
-}
-```
+  ```TypeScript
+  declare global {
+      interface HTMLElementTagNameMap {
+        "my-product": MyProduct
+      }
+  }
+  ```
+- Instead of regular events, dispatch [CustomEvent](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent) and you can add data in the constructor
+  ```JS
+        const productDetails:TProductDetails = {name:this.name, price:854.5}
+        this.dispatchEvent(new CustomEvent("buy",{detail:productDetails}))  
+        //And the user can listen to that event like so:
+        myProduct().addEventListener("buy",(e)=>alert('Buy Me, Please!' + JSON.stringify(e.detail)))
+  ```
 
 ## tsorchids
 This is a remake of [Jack Herrington Javascript Modules in detail - Part 1](https://youtu.be/mMB8DNLotDs)

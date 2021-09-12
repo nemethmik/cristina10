@@ -15,15 +15,17 @@
     </script>
     <h2>Product Details Page</h2>
     <button onclick="myProduct().name = 'iPhone7'" id="changeproduct">Change Product</button>  
-    <button onclick="myProduct().hide()" id="hideproduct">Hide</button>  
-    <button onclick="myProduct().show()" id="showproduct">Show</button>  
+    <button onclick="myProduct().hide()">Hide</button>  
+    <button onclick="myProduct().show()">Show</button>  
     <!-- onbuy="alert('Buy Me, Please!')" doesn't work -->
     <my-product name="Note8" style="font-size: xx-large;">
         <span slot="price">$560</span>
         <h2>One of the best smartphones ever.</h2>
     </my-product> 
     <script>
-       myProduct().addEventListener("buy",()=>alert('Buy Me, Please!'))
+       myProduct().addEventListener("buy",(e)=>alert('Buy Me, Please!' + JSON.stringify(e.detail)))
+       //This won't work even when the shadow root is open :-\
+       //myProduct().shadowRoot.querySelector("button").addEventListener("click",()=>alert("Hello from Shadow DOM"))
     </script>
 </body>
 <script type="module" src="./index.js"></script>
