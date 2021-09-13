@@ -1,6 +1,19 @@
 # cristina10
 A multi-project (aka mono) repo for TypeScript web server, front-end and database applications (Chirichella)
 
+## vaadings (Getting Started with Vaadin)
+[Vaadin Fusion by Marcus Hellberg](https://vaadin.com/docs/latest/fusion/overview) is possibly even better than SAP UI5, since Fusion was implemented with TypeScript on top of LitElement.
+[How to use Web Components, 2018 Dec 12](https://vaadin.com/learn/tutorials/using-web-components) and accompanying videos are to be followed first:
+- [How to use Web Components in a JavaScript project](https://youtu.be/88Sa-SlHRxk) 
+
+Since the project is using package libraries, a bundler is required; so, I decided to use ViteJS, since it has a template for Lit projects, exactly as I did in my [elena14](https://github.com/nemethmik/elena14).
+Project setup is then
+- Run **npm init vite** on the repoo root folder to craete *vaadings* subfolder
+- **npm install lit @vaadin/vaadin-button @vaadin/vaadin-grid @vaadin/vaadin-text-field** for the example app as suggested in [How to use Web Components in a JavaScript project](https://youtu.be/88Sa-SlHRxk)
+
+
+
+
 ## tswebcomp
 After the *tsorchids* remake, I started experimenting with web componentsfoloowing [JH Web Components Custom Elements, Templates and the Shadow DOM, 2019](https://youtu.be/_Tr9ZcXcMjQ) and the subsequent two parts.
 
