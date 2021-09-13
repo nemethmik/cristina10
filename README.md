@@ -9,7 +9,10 @@ A multi-project (aka mono) repo for TypeScript web server, front-end and databas
 Since the project is using package libraries, a bundler is required; so, I decided to use ViteJS, since it has a template for Lit projects, exactly as I did in my [elena14](https://github.com/nemethmik/elena14).
 Project setup is then
 - Run **npm init vite** on the repoo root folder to craete *vaadings* subfolder
-- **npm install lit @vaadin/vaadin-button @vaadin/vaadin-grid @vaadin/vaadin-text-field** for the example app as suggested in [How to use Web Components in a JavaScript project](https://youtu.be/88Sa-SlHRxk)
+  - cd vaadings and npm install
+- Copy *.eslintrc.json* from the other project
+  - npm i -D @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint
+- **npm install @vaadin/vaadin-button @vaadin/vaadin-grid @vaadin/vaadin-text-field** for the example app as suggested in [How to use Web Components in a JavaScript project](https://youtu.be/88Sa-SlHRxk)
 
 
 

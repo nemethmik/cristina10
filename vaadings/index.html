@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/src/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + Lit-Element App</title>
+    <!-- script type="module" src="/src/my-element.ts"></script -->
+    <script type="module" src="/src/index.ts"></script>
+  </head>
+  <body>
+    <div class="form">
+      <vaadin-text-field label="First Name" id="firstName"> </vaadin-text-field>
+      <vaadin-text-field label="Last Name" id="lastName"> </vaadin-text-field>
+      <vaadin-button id="addButton"> Add </vaadin-button>
+    </div>
+    <vaadin-grid id="grid">
+      <vaadin-grid-column path="firstName" header="First name"> 
+      </vaadin-grid-column>
+      <vaadin-grid-column path="lastName" header="Last name">
+      </vaadin-grid-column>
+    </vaadin-grid>
+  </body>
+</html>

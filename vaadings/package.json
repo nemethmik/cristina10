@@ -1,0 +1,32 @@
+{
+  "name": "vaadings",
+  "version": "0.0.0",
+  "main": "dist/my-element.es.js",
+  "exports": {
+    ".": "./dist/my-element.es.js"
+  },
+  "types": "types/my-element.d.ts",
+  "files": [
+    "dist",
+    "types"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "fix":"eslint src --fix"
+  },
+  "dependencies": {
+    "@vaadin/vaadin-button": "^21.0.1",
+    "@vaadin/vaadin-grid": "^21.0.1",
+    "@vaadin/vaadin-text-field": "^21.0.1",
+    "lit": "^2.0.0-rc.4",
+    "lit-element": "^2.4.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.31.0",
+    "@typescript-eslint/parser": "^4.31.0",
+    "eslint": "^7.32.0",
+    "typescript": "^4.3.2",
+    "vite": "^2.5.4"
+  }
+}
