@@ -2,23 +2,20 @@
 A multi-project (aka mono) repo for TypeScript web server, front-end and database applications (Chirichella)
 
 ## vaadings (Getting Started with Vaadin)
-[Vaadin Fusion by Marcus Hellberg](https://vaadin.com/docs/latest/fusion/overview) is possibly even better than SAP UI5, since Fusion was implemented with TypeScript on top of LitElement.
+[Vaadin Fusion](https://vaadin.com/docs/latest/fusion/overview) was implemented with JavaScript on top of LitElement, but it comes with full TzpeScript tzpe definitions, too.
 [How to use Web Components, 2018 Dec 12](https://vaadin.com/learn/tutorials/using-web-components) and accompanying videos are to be followed first:
 - [How to use Web Components in a JavaScript project](https://youtu.be/88Sa-SlHRxk) 
 
-Since the project is using package libraries, a bundler is required; so, I decided to use ViteJS, since it has a template for Lit projects, exactly as I did in my [elena14](https://github.com/nemethmik/elena14).
+Since the project is using package libraries, a bundler is required; so, I decided to use ViteJS, since it has a template for Lit projects, exactly as I did in my [elena14](https://github.com/nemethmik/elena14), but this Vite lit-element template is to make library projects for web components, and not applications. For deployable regular web applications use the **vanilla-ts** template.
 Project setup is then
-- Run **npm init vite** on the repoo root folder to craete *vaadings* subfolder
+- Run **npm init vite** on the repo root folder to craete *vaadings* subfolder
   - cd vaadings and npm install
 - Copy *.eslintrc.json* from the other project
   - npm i -D @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint
 - **npm install @vaadin/vaadin-button @vaadin/vaadin-grid @vaadin/vaadin-text-field** for the example app as suggested in [How to use Web Components in a JavaScript project](https://youtu.be/88Sa-SlHRxk)
 
-
-
-
 ## tswebcomp
-After the *tsorchids* remake, I started experimenting with web componentsfoloowing [JH Web Components Custom Elements, Templates and the Shadow DOM, 2019](https://youtu.be/_Tr9ZcXcMjQ) and the subsequent two parts.
+After the *tsorchids* remake, I started experimenting with web components foloowing [JH Web Components Custom Elements, Templates and the Shadow DOM, 2019](https://youtu.be/_Tr9ZcXcMjQ) and the subsequent two parts.
 
 Here is my eloquent explanation video [Web Component (Custom Element) Fundamentals with TypeScript](https://youtu.be/RjpoiFdEBWs).
 
