@@ -1,0 +1,21 @@
+{
+  "name": "jobwatch",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "serve": "vite preview"
+  },
+  "devDependencies": {
+    "typescript": "^4.3.2",
+    "vite": "^2.5.4"
+  },
+  "dependencies": {
+    "@vaadin/vaadin-app-layout": "^21.0.2",
+    "@vaadin/vaadin-icon": "^21.0.2",
+    "@vaadin/vaadin-icons": "^21.0.2",
+    "@vaadin/vaadin-lumo-styles": "^21.0.2",
+    "@vaadin/vaadin-tabs": "^21.0.2",
+    "lit": "^2.0.0"
+  }
+}

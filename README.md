@@ -1,6 +1,17 @@
 # cristina10
 A multi-project (aka mono) repo for TypeScript web server, front-end and database applications (Chirichella)
 
+## jobwatch
+Based on the JQuery Mobile implementation's design here is a more modern Li/Vaadin/Vite/TS version.
+How the project was initialized:
+- in the repo root folder `npm init vite` then select *vanilla-ts* the cd into *jobwatch*
+- `npm install` in the jobwatch project folder to install dev dependencies then remember to change target to ES2021 and comment out useDefineForClassFields in tsconfig, otherwise Lit will not work.
+- `npm install lit`
+- [App Layout](https://vaadin.com/docs/latest/ds/components/app-layout)
+  - `npm i @vaadin/vaadin-app-layout @vaadin/vaadin-icon @vaadin/vaadin-tabs @vaadin/vaadin-icons`
+
+ **Unfortunately this is not willing to work at all, I'll create a separate project monica6 for an isolated example to request help from the Vaadin community**
+
 ## vaadings (Getting Started with Vaadin)
 [Vaadin Fusion](https://vaadin.com/docs/latest/fusion/overview) was implemented with JavaScript on top of LitElement, but it comes with full TzpeScript tzpe definitions, too.
 [How to use Web Components, 2018 Dec 12](https://vaadin.com/learn/tutorials/using-web-components) and accompanying videos are to be followed first:
