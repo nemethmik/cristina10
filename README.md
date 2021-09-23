@@ -1,6 +1,14 @@
 # cristina10
 A multi-project (aka mono) repo for TypeScript web server, front-end and database applications (Chirichella)
 
+Lit-HTML is eye-opening brutally excellent tool for both regular reactive web application development as well as for web components. Lit Element is fantastic, too, for web components. These tools themselves are awesome, mature error-free, brilliant. The problem is with the entire web component ecosystem: there are no really great, reliable professional quality components libraries for business applications. Vaadin Fusion would be really decent, but it is tied heavily to their Java server stack. Shoelace looks awesome, but it has no data-grid, table, virtual list or any list component. SAP UI5 Web Components (not to confuse with the plain UI5), has a UI5Table component but it is not up to what is expected for a business app (Vaadin Grid, even the free version, is almost perfect). UI5 web components uses lit-html but not Lit Element. Material Components are version 0.25 and TB developed. Microsoft FAST/FluidUI web components, the technology is brutally similar to lit-html/Lit Element, but their data-grid component is pathetic. Telerik a major component manufacturer has no web component version of their libraries. Haunted has a great concept for hook-paradigm, and is based on lit-html, but it uses a an old version of lit-html which doesn't work with any component libraries.  So, wherever you go you'll find major issues.
+
+One more thing, Lit-Plugin Visual Studio Code extension is fine, but it is far from perfect, when the application is getting bigger and bigger, its code completion, context sensitive support for listing properties, event handlers (the @ syntax) is getting hit or miss. This not the case when using React TypeScript or Angular, where the Visual Studio Code programmer experience is mature and reliable. In Angular you have @output concept, which is totally missing from the Custom Element specification. So there is a long road to go to catch up the well established current frameworks. And the last comment, when you have a component toolset like React or Angular, you don't need web components, totally irrelevant, a major hassle and additional complexity, web components are alien to Angular/React. You can somehow enforce them into the machinery, but why?
+
+On the other hand, Lit is so brilliant that if you are open to build your own web component library it would be my choice.
+Vaadin Fusion library is brilliant but their tight coupling with Java server is sever limitation.
+
+
 ## jobwatch
 Based on the JQuery Mobile implementation's design here is a more modern Li/Vaadin/Vite/TS version.
 How the project was initialized:
