@@ -20,6 +20,8 @@ How the project was initialized:
 
  **Unfortunately this is not willing to work at all, I'll create a separate project monica6 for an isolated example to request help from the Vaadin community**
 
+ **Yeah, this Vaadin experiment is a total dead end**
+
 ## vaadings (Getting Started with Vaadin)
 [Vaadin Fusion](https://vaadin.com/docs/latest/fusion/overview) was implemented with JavaScript on top of LitElement, but it comes with full TzpeScript tzpe definitions, too.
 [How to use Web Components, 2018 Dec 12](https://vaadin.com/learn/tutorials/using-web-components) and accompanying videos are to be followed first:
