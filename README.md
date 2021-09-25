@@ -17,10 +17,59 @@ How the project was initialized:
 - `npm install lit`
 - [App Layout](https://vaadin.com/docs/latest/ds/components/app-layout)
   - `npm i @vaadin/vaadin-app-layout @vaadin/vaadin-icon @vaadin/vaadin-tabs @vaadin/vaadin-icons`
+  - I spent a hell lot of time fighting with the Vaadin layouts including Lumo CSS Frameweork - [see my frustration video here](https://youtu.be/by8DA3Ox_Yw) - as demonstrated in the video [Vaadin Fusion CSS Layouts (DON'T WATCH WASTE OF TIME)](https://youtu.be/bkvZyMVRVLQ) since "Vaadin 21 and later include the CSS class names out of the box, so no need to install them separately anymore". 
+  So, I gave a try, and it really worked in the vaadin generated applications, but I wasn't able to make it working in a standalone application.
+  - But I did't give up, I watched Net Ninja's CSS flexbox tutorial series, and flexbox CSS directives worked fine with the Vaadin web components, too, 
+  so dropped all Vaadin layouting components and implemented my own plain flexbox layout. Unfortunately, Net Ninja's videos were not enough; I wanted a layout with an app bar, an optionally scrollable middle contents section and a sticky bottom button bar.
+    - This layout was the default with the once brilliant JQuery Mobile
+    - Actually I could live without the sticky bottom button bar, but in a handheld mobile device in the right hand, the most convenient place for buttons are on the bottom. 
+  - So, I found [Create a mobile app layout with Flexbox](https://youtu.be/TrsrNZo0pOY) and https://github.com/wesbos/What-The-Flexbox/tree/master/flexbox-app-layout
+  and based on that I have elaborated a more-or-less fine solution with significant changes and code cleaning. 
+    - I used semantic HTML5 element names (section (for the concept of page), header, footer, main (for middle contents area)) consistently.
+    - The footer had to be removed from the section flex container to make it a zero-bottom-positioned element: `footer{position:fix; bottom:0;}`
+    - It's hilarious that CSS designers, unlike Android, Xamarin, Qt, Java GUI) were not able to make a clean layout solution. This flaxbox is a total mess, you can learn it, but it is mess.
+    - I created a PageBase class derived from Lit element and that class implements the layouting CSS, and all my page components are derived from this class.
+  - Despite this partial success, I am loosing mental energy to continue the fight with Vaadin, just because of their data grid component. Vaadin Fusion components are not written in TypeScript. 
+    - The next bummer was that I wanted to enable **dark mode** for the sake of smart watch users.
+      - I followed the instructions [Dark Mode](https://vaadin.com/docs/latest/ds/foundation/color/#dark-mode) but it doesn't want to swith to dark theme. 
+      **Yeah, this Vaadin experiment is almost a dead end** Since, oficially Fusion components are not supported outside the Vaadin generated applications, 
+      there is no community to ask. I might be totally wrong when pursuing Vaadin, SAP UI5 Table cannot come even close to Vaadin Grid, but they have an open community
+      and [responding questions](https://github.com/SAP/ui5-webcomponents/discussions/3959). 
+    - The [menu bar component](https://vaadin.com/docs/latest/ds/components/menu-bar) seems brutally lousy, not up to the high quality of the other components.
 
- **Unfortunately this is not willing to work at all, I'll create a separate project monica6 for an isolated example to request help from the Vaadin community**
+### Defining Custom Evemt Names and Payload Structures
+I first tried this technique in [paola18](https://github.com/nemethmik/paola18/blob/master/src/my-ui5demo.ts) based on an article
+[Sunny Sun: How to Share Constants in Typescript Project - Avoid the magic strings, make your app maintainable and strongly typed](https://medium.com/codex/how-to-share-constants-in-typescript-project-8f76a2e40352)
+```ts 
+export const TCustomEvents = {ConfigDone: "configdone", LoginBack: "loginback"} as const
+export type TConfigDonePayload = {detail:{saved:boolean},composed: true}
+```
+Thi is how to dispatch properly a custom event:
+```ts
+    const payload:TConfigDonePayload = {detail:{saved:false},composed:true}
+    this.dispatchEvent(new CustomEvent(TCustomEvents.ConfigDone,payload))
+```
+It is terribly important to set the **composed** option to true in custom events, otherwise it doesn't bubbles up to the application component. 
+In the type definition I simply defined the type for composed as boolean false; this is a brutally fancy feature of TypeScript; **that's why we love it**.
 
- **Yeah, this Vaadin experiment is a total dead end**
+### Event Listeners of the Application Component
+If the events are dispatched with composed set to true, then the application web component can listen to all events:
+```ts
+  override connectedCallback():void {
+    super.connectedCallback()
+    // WARNING!!! DON'T DEFINE an EVENT LISTENER on THE SHADOW ROOT if you want to reference "THIS"
+    // this.shadowRoot!.addEventListener( DON'T DO THIS )
+    this.addEventListener(TCustomEvents.ConfigDone,this.onConfigDone as EventListener)
+  }
+```
+Don't define the event listener on the shadow root, since then the **this** value is set to the shadow root object and not the actual component's.
+Note the tricky casting `this.onConfigDone as EventListener` to prevent TypeScript complaining: 
+[How to add a custom event listener?](https://github.com/microsoft/TypeScript/issues/28357#issuecomment-436484705)
+ ```ts
+ buttonEl.addEventListener('myCustomEvent', ((event: CustomEvent) => {
+  //do something
+}) as EventListener);
+ ```
 
 ## vaadings (Getting Started with Vaadin)
 [Vaadin Fusion](https://vaadin.com/docs/latest/fusion/overview) was implemented with JavaScript on top of LitElement, but it comes with full TzpeScript tzpe definitions, too.

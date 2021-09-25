@@ -1,55 +1,82 @@
-import { html, LitElement, TemplateResult } from "lit"
+import { html, TemplateResult } from "lit"
 import { customElement } from "lit/decorators.js"
-import "@vaadin/vaadin-form-layout/vaadin-form-layout"
+import "@vaadin/vaadin-menu-bar/vaadin-menu-bar"
 import "@vaadin/vaadin-text-field/vaadin-text-field"
 import "@vaadin/vaadin-text-field/vaadin-password-field"
 import "@vaadin/vaadin-checkbox/vaadin-checkbox"
 import "@vaadin/vaadin-text-field/vaadin-integer-field"
 import "@vaadin/vaadin-button"
-//import { applyTheme } from "Frontend/generated/theme"
-import { FormLayoutResponsiveStep } from "@vaadin/vaadin-form-layout/vaadin-form-layout"
+import {PageBase, TCustomEvents, TConfigDonePayload} from "./page-base"
 
 @customElement("page-config")
-class PageConfig extends LitElement {
-//   protected createRenderRoot() {
-//     const root = super.createRenderRoot()
-//     // Apply custom theme (only supported if your app uses one)
-//     applyTheme(root)
-//     return root
-//   }
-  private responsiveSteps: FormLayoutResponsiveStep[] = [
-    // Use one column by default
-    { minWidth: 0, columns: 1 },
-    // Use two columns, if layout's width exceeds 500px
-    { minWidth: "500px", columns: 2 },
-  ]
+class PageConfig extends PageBase {
   render():TemplateResult {
     return html`
-        <vaadin-vertical-layout theme="spacing" >
-            <vaadin-form-layout .responsiveSteps=${this.responsiveSteps}>
-                <vaadin-checkbox checked=true>HTTPS</vaadin-checkbox>
-                <vaadin-text-field label="Version" readonly value="0.0.1"></vaadin-text-field>
-                <!-- Stretch the username field over 2 columns -->
-                <vaadin-text-field colspan=2 label="Domain"></vaadin-text-field>
-                <vaadin-text-field label="Service"></vaadin-text-field>
-                <vaadin-integer-field label="Port" value=443></vaadin-integer-field>
-                <!--vaadin-password-field label="Password"> </vaadin-password-field -->
-            </vaadin-form-layout>
-            <!--vaadin-horizontal-layout theme="spacing">
-                <vaadin-button theme="primary">Create account</vaadin-button>
-                <vaadin-button theme="secondary">Cancel</vaadin-button>
-            </vaadin-horizontal-layout-->
-            <vaadin-horizontal-layout theme="spacing" style="justify-content: center">
-                <vaadin-button theme="primary">Right
-                    <vaadin-icon icon="vaadin:arrow-right" slot="suffix"></vaadin-icon>
-                </vaadin-button>
-                <vaadin-button>
-                    <vaadin-icon icon="vaadin:ellipsis-dots-v" slot="prefix"></vaadin-icon>
-                    More
-                </vaadin-button>
-            </vaadin-horizontal-layout>
-        </vaadin-vertical-layout>
+    <section>
+        <header>
+            <vaadin-button theme="primary">Config V01</vaadin-button>
+            <!--
+            <vaadin-button>
+                <vaadin-icon icon="vaadin:cog" slot="prefix"></vaadin-icon>
+                Settings
+            </vaadin-button>
+            -->
+        </header>
+        <main>
+            <table>
+                <tr>
+                    <td></td>
+                    <td><vaadin-checkbox checked=true><label>HTTPS<label></vaadin-checkbox></td>
+                </tr>
+                <tr>
+                    <td><label>Host</label></td>
+                    <td><vaadin-text-field placeholder=Host clear-button-visible></vaadin-text-field></td>
+                </tr>
+                <tr>
+                    <td>Domain</td>
+                    <td><vaadin-text-field clear-button-visible></vaadin-text-field></td>
+                </tr>
+                <tr>
+                    <td>Service</td>
+                    <td><vaadin-text-field clear-button-visible></vaadin-text-field></td>
+                </tr>
+                <tr>
+                    <td>Port</td>
+                    <td><vaadin-integer-field value=443 clear-button-visible></vaadin-integer-field></td>
+                </tr>
+            </table>            
+        </main>            
+    </section>
+    <footer>
+        <vaadin-button>
+            <vaadin-icon icon="vaadin:exit" slot="suffix"></vaadin-icon>
+            Exit
+        </vaadin-button>
+        <!--
+        <vaadin-button>
+            <vaadin-icon icon="vaadin:arrow-left" slot="prefix"></vaadin-icon>
+            Back
+        </vaadin-button>
+        -->
+        <vaadin-button theme="primary" @click=${this.onDoneButtonClick}>Done
+            <vaadin-icon icon="vaadin:arrow-right" slot="suffix"></vaadin-icon>
+        </vaadin-button>
+        <!--
+        <vaadin-button>
+            <vaadin-icon icon="vaadin:ellipsis-dots-v" slot="prefix"></vaadin-icon>
+            More
+        </vaadin-button>
+        -->
+        <vaadin-menu-bar
+            .items="${[{text:"More", children: [{ text: "Reset" },{ text: "Logout" }] }]}"
+        ></vaadin-menu-bar>
+    </footer>
     `
+  }
+  onDoneButtonClick():void {
+    //console.log("onDoneButtonClick")
+    const payload:TConfigDonePayload = {detail:{saved:false},composed:true}
+    this.dispatchEvent(new CustomEvent(TCustomEvents.ConfigDone,payload))
   }
 }
 declare global { interface HTMLElementTagNameMap { "page-config": PageConfig}}
