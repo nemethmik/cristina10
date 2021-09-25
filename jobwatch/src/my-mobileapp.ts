@@ -23,9 +23,9 @@ class MobileApp extends LitElement {
     // this.shadowRoot!.addEventListener( DON'T DO THIS )
     this.addEventListener(TCustomEvents.ConfigDone,this.onConfigDone as EventListener)
   }
+  // Removel of event listeners on the app level is optional, but definitely a good practice
   override disconnectedCallback():void {
     super.disconnectedCallback()
-    //this.shadowRoot!.removeEventListener(TCustomEvents.ConfigDone,this.onConfigDone as EventListener)
     this.removeEventListener(TCustomEvents.ConfigDone,this.onConfigDone as EventListener)
   }
   onConfigDone(e:CustomEvent):void {

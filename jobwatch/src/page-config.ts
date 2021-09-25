@@ -74,7 +74,6 @@ class PageConfig extends PageBase {
     `
   }
   onDoneButtonClick():void {
-    //console.log("onDoneButtonClick")
     const payload:TConfigDonePayload = {detail:{saved:false},composed:true}
     this.dispatchEvent(new CustomEvent(TCustomEvents.ConfigDone,payload))
   }

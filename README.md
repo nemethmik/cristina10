@@ -1,15 +1,21 @@
 # cristina10
 A multi-project (aka mono) repo for TypeScript web server, front-end and database applications (Chirichella)
 
-Lit-HTML is eye-opening brutally excellent tool for both regular reactive web application development as well as for web components. Lit Element is fantastic, too, for web components. These tools themselves are awesome, mature error-free, brilliant. The problem is with the entire web component ecosystem: there are no really great, reliable professional quality components libraries for business applications. Vaadin Fusion would be really decent, but it is tied heavily to their Java server stack. Shoelace looks awesome, but it has no data-grid, table, virtual list or any list component. SAP UI5 Web Components (not to confuse with the plain UI5), has a UI5Table component but it is not up to what is expected for a business app (Vaadin Grid, even the free version, is almost perfect). UI5 web components uses lit-html but not Lit Element. Material Components are version 0.25 and TB developed. Microsoft FAST/FluidUI web components, the technology is brutally similar to lit-html/Lit Element, but their data-grid component is pathetic. Telerik a major component manufacturer has no web component version of their libraries. Haunted has a great concept for hook-paradigm, and is based on lit-html, but it uses a an old version of lit-html which doesn't work with any component libraries.  So, wherever you go you'll find major issues.
+Here is an accompanying video explaining Jobwatch [Lit 2.0 Announced, Flexbox Layout for Jobwatch (Review)](https://youtu.be/U8a2DDUFnm4)
 
-One more thing, Lit-Plugin Visual Studio Code extension is fine, but it is far from perfect, when the application is getting bigger and bigger, its code completion, context sensitive support for listing properties, event handlers (the @ syntax) is getting hit or miss. This not the case when using React TypeScript or Angular, where the Visual Studio Code programmer experience is mature and reliable. In Angular you have @output concept, which is totally missing from the Custom Element specification. So there is a long road to go to catch up the well established current frameworks. And the last comment, when you have a component toolset like React or Angular, you don't need web components, totally irrelevant, a major hassle and additional complexity, web components are alien to Angular/React. You can somehow enforce them into the machinery, but why?
 
-On the other hand, Lit is so brilliant that if you are open to build your own web component library it would be my choice.
-Vaadin Fusion library is brilliant but their tight coupling with Java server is sever limitation.
+## Ranting on the Event of Lit 2.0 Officially Announced
+### A Quick subjective review of the Web Component landscape in 2021 Sept
+Lit-HTML is eye-opening brutally excellent tool for both regular **reactive** web application development as well as for web components. Lit Element is fantastic, too, for web components. These tools themselves are awesome, mature error-free, brilliant. The problem is with the entire web component ecosystem: there are no really great, reliable professional quality components libraries for business applications. *Vaadin Fusion* would be really decent, but it is tied heavily to their Java server stack. *Shoelace* looks awesome, but it has no data-grid/table/virtual list or any list component at all. *SAP UI5 Web Components* (not to confuse with the plain UI5), has a quite decent *UI5Table* component, but it is not up to what is expected for a demanding business app (Vaadin Grid, even the free version, is almost perfect). UI5 web components uses lit-html but not Lit Element. *Material Components* are version 0.25 and TB developed. As for *Microsoft FAST/FluidUI* web components, the technology is brutally similar to lit-html/Lit Element, but their *data-grid* component is pathetic. *Telerik* a major component manufacturer has no web component version of their libraries. *Haunted* has a great concept for hook-paradigm, and is based on lit-html, but it uses a an old version of lit-html which doesn't work with any component libraries.
 
+*Lit-Plugin* Visual Studio Code extension is fine, but it is far from perfect, when the application is getting bigger, its code completion, context sensitive support for listing properties, @-syntax event handlers is getting hit or miss. When using React/TypeScript or Angular, Visual Studio Code programmer experience is mature and reliable in this regard. In Angular you even have the *@output* concept, which is totally missing from the Custom Element specification. When you have a component toolset like React or Angular, you don't need web components, totally irrelevant, a major hassle and additional complexity, web components are alien to Angular/React. 
+
+On the other hand, *Lit* is so brilliant that, if you are open to build your own web component library, it would be the best choice.
+*Vaadin Fusion* library is really decent but their tight coupling with Java server is sever limitation, unfortunately.
 
 ## jobwatch
+Online version is available on [Azure](https://white-beach-0d4819403.azurestaticapps.net/)
+
 Based on the JQuery Mobile implementation's design here is a more modern Li/Vaadin/Vite/TS version.
 How the project was initialized:
 - in the repo root folder `npm init vite` then select *vanilla-ts* the cd into *jobwatch*
@@ -52,7 +58,7 @@ Thi is how to dispatch properly a custom event:
 It is terribly important to set the **composed** option to true in custom events, otherwise it doesn't bubbles up to the application component. 
 In the type definition I simply defined the type for composed as boolean false; this is a brutally fancy feature of TypeScript; **that's why we love it**.
 
-### Event Listeners of the Application Component
+### Event Listeners on the Application Component
 If the events are dispatched with composed set to true, then the application web component can listen to all events:
 ```ts
   override connectedCallback():void {
