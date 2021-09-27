@@ -1,20 +1,21 @@
-import { LitElement, css } from "lit"
-export const TCustomEvents = {ConfigDone: "configdone", LoginBack: "loginback"} as const
+import { LitElement, css, CSSResult } from "lit"
+export const TCustomEvents = {ConfigDone: "configdone", LoginBack: "loginback", LoginLogin:"loginlogin"} as const
 export type TConfigDonePayload = {detail:{saved:boolean},composed: true}
+export type TLoginBackPayload = {detail:{saved:boolean},composed: true}
 
 export class PageBase extends LitElement {
-    static styles = css`
+    static override get styles():CSSResult[] {return [css`
         section {
             display:flex;
             flex-direction:column;
             height: 92vh;
         }
         header {
-            background-color: #800020;
+            //background-color: #800020;
             display:flex;align-items:center;justify-content:center; 
         }
         footer{
-            background-color: #800020;
+            //background-color: #800020;
             display: flex; flex-flow: row; justify-content: center;
             position:fix; bottom:0;
         }
@@ -28,5 +29,7 @@ export class PageBase extends LitElement {
             font-family: var(--lumo-font-family);
             font-size: var(--lumo-font-size-m)
         }
-      `
+        h1 {font-family:var(--lumo-font-family)}
+
+      `]}
 }

@@ -1,47 +1,32 @@
 # cristina10
-A multi-project (aka mono) repo for TypeScript web server, front-end and database applications (Chirichella)
+A multi-project repo for TypeScript web server, front-end and database applications (Chirichella)
 
-Here is an accompanying video explaining Jobwatch [Lit 2.0 Announced, Flexbox Layout for Jobwatch (Review)](https://youtu.be/U8a2DDUFnm4)
-
-
-## Ranting on the Event of Lit 2.0 Officially Announced
-### A Quick subjective review of the Web Component landscape in 2021 Sept
-Lit-HTML is eye-opening brutally excellent tool for both regular **reactive** web application development as well as for web components. Lit Element is fantastic, too, for web components. These tools themselves are awesome, mature error-free, brilliant. The problem is with the entire web component ecosystem: there are no really great, reliable professional quality components libraries for business applications. *Vaadin Fusion* would be really decent, but it is tied heavily to their Java server stack. *Shoelace* looks awesome, but it has no data-grid/table/virtual list or any list component at all. *SAP UI5 Web Components* (not to confuse with the plain UI5), has a quite decent *UI5Table* component, but it is not up to what is expected for a demanding business app (Vaadin Grid, even the free version, is almost perfect). UI5 web components uses lit-html but not Lit Element. *Material Components* are version 0.25 and TB developed. As for *Microsoft FAST/FluidUI* web components, the technology is brutally similar to lit-html/Lit Element, but their *data-grid* component is pathetic. *Telerik* a major component manufacturer has no web component version of their libraries. *Haunted* has a great concept for hook-paradigm, and is based on lit-html, but it uses a an old version of lit-html which doesn't work with any component libraries.
-
-*Lit-Plugin* Visual Studio Code extension is fine, but it is far from perfect, when the application is getting bigger, its code completion, context sensitive support for listing properties, @-syntax event handlers is getting hit or miss. When using React/TypeScript or Angular, Visual Studio Code programmer experience is mature and reliable in this regard. In Angular you even have the *@output* concept, which is totally missing from the Custom Element specification. When you have a component toolset like React or Angular, you don't need web components, totally irrelevant, a major hassle and additional complexity, web components are alien to Angular/React. 
-
-On the other hand, *Lit* is so brilliant that, if you are open to build your own web component library, it would be the best choice.
-*Vaadin Fusion* library is really decent but their tight coupling with Java server is sever limitation, unfortunately.
 
 ## jobwatch
 Online version is available on [Azure](https://white-beach-0d4819403.azurestaticapps.net/)
 
-Based on the JQuery Mobile implementation's design here is a more modern Li/Vaadin/Vite/TS version.
-How the project was initialized:
-- in the repo root folder `npm init vite` then select *vanilla-ts* the cd into *jobwatch*
-- `npm install` in the jobwatch project folder to install dev dependencies then remember to change target to ES2021 and comment out useDefineForClassFields in tsconfig, otherwise Lit will not work.
+Based on the JQuery Mobile implementation's design here is a more modern Lit/Vaadin/Vite/TS version.
+Project setup:
+- In the repo root folder `npm init vite` then select *vanilla-ts*, then cd into *jobwatch*
+- `npm install` in the jobwatch project folder to install dev dependencies
+  - Remember to change *target* to ES2021 and comment out useDefineForClassFields in tsconfig, otherwise *Lit* will not work.
 - `npm install lit`
-- [App Layout](https://vaadin.com/docs/latest/ds/components/app-layout)
-  - `npm i @vaadin/vaadin-app-layout @vaadin/vaadin-icon @vaadin/vaadin-tabs @vaadin/vaadin-icons`
-  - I spent a hell lot of time fighting with the Vaadin layouts including Lumo CSS Frameweork - [see my frustration video here](https://youtu.be/by8DA3Ox_Yw) - as demonstrated in the video [Vaadin Fusion CSS Layouts (DON'T WATCH WASTE OF TIME)](https://youtu.be/bkvZyMVRVLQ) since "Vaadin 21 and later include the CSS class names out of the box, so no need to install them separately anymore". 
-  So, I gave a try, and it really worked in the vaadin generated applications, but I wasn't able to make it working in a standalone application.
-  - But I did't give up, I watched Net Ninja's CSS flexbox tutorial series, and flexbox CSS directives worked fine with the Vaadin web components, too, 
-  so dropped all Vaadin layouting components and implemented my own plain flexbox layout. Unfortunately, Net Ninja's videos were not enough; I wanted a layout with an app bar, an optionally scrollable middle contents section and a sticky bottom button bar.
-    - This layout was the default with the once brilliant JQuery Mobile
-    - Actually I could live without the sticky bottom button bar, but in a handheld mobile device in the right hand, the most convenient place for buttons are on the bottom. 
+- Check out *package.json* to see which Vaadin packages to install.
+- Using Vaadin's [app Layout](https://vaadin.com/docs/latest/ds/components/app-layout) was a dead-end
+  - I spent a hell lot of time on the Vaadin layouts including Lumo CSS Frameweork - [see my frustration video here](https://youtu.be/by8DA3Ox_Yw) - as demonstrated in the video [Vaadin Fusion CSS Layouts (DON'T WATCH WASTE OF TIME)](https://youtu.be/bkvZyMVRVLQ) since "Vaadin 21 and later include the CSS class names out of the box, so no need to install them separately anymore". 
+  So, it worked in the vaadin generated applications as expected, but I wasn't able to make it working in a "standalone" application.
+  - I did't give up, I learned raw flexbox, and flexbox CSS directives worked fine with the Vaadin web components. 
+  So, I dropped all Vaadin layouting components, and implemented my own plain flexbox layout. I wanted a layout with an app bar, an optionally scrollable middle contents section and a sticky bottom button bar.
+    - Actually, I could live without the sticky bottom button bar, but in a handheld mobile device in the right hand, the most convenient place for buttons are on the bottom. 
   - So, I found [Create a mobile app layout with Flexbox](https://youtu.be/TrsrNZo0pOY) and https://github.com/wesbos/What-The-Flexbox/tree/master/flexbox-app-layout
-  and based on that I have elaborated a more-or-less fine solution with significant changes and code cleaning. 
+  and based on that, I have elaborated a more-or-less fine solution with significant changes and code cleaning. 
     - I used semantic HTML5 element names (section (for the concept of page), header, footer, main (for middle contents area)) consistently.
     - The footer had to be removed from the section flex container to make it a zero-bottom-positioned element: `footer{position:fix; bottom:0;}`
-    - It's hilarious that CSS designers, unlike Android, Xamarin, Qt, Java GUI) were not able to make a clean layout solution. This flaxbox is a total mess, you can learn it, but it is mess.
     - I created a PageBase class derived from Lit element and that class implements the layouting CSS, and all my page components are derived from this class.
-  - Despite this partial success, I am loosing mental energy to continue the fight with Vaadin, just because of their data grid component. Vaadin Fusion components are not written in TypeScript. 
-    - The next bummer was that I wanted to enable **dark mode** for the sake of smart watch users.
-      - I followed the instructions [Dark Mode](https://vaadin.com/docs/latest/ds/foundation/color/#dark-mode) but it doesn't want to swith to dark theme. 
-      **Yeah, this Vaadin experiment is almost a dead end** Since, oficially Fusion components are not supported outside the Vaadin generated applications, 
-      there is no community to ask. I might be totally wrong when pursuing Vaadin, SAP UI5 Table cannot come even close to Vaadin Grid, but they have an open community
-      and [responding questions](https://github.com/SAP/ui5-webcomponents/discussions/3959). 
-    - The [menu bar component](https://vaadin.com/docs/latest/ds/components/menu-bar) seems brutally lousy, not up to the high quality of the other components.
+- The next challenge is to enable **dark mode**. I followed the instructions [Dark Mode](https://vaadin.com/docs/latest/ds/foundation/color/#dark-mode) but it doesn't swith to dark theme. 
+- The [menu bar component](https://vaadin.com/docs/latest/ds/components/menu-bar) is a quite simplistic, but it might be OK for the job.
+
+Here is an accompanying (unlisted) video explaining this iteration of the work on Jobwatch [Lit 2.0 Announced, Flexbox Layout for Jobwatch (Review)](https://youtu.be/U8a2DDUFnm4)
 
 ### Defining Custom Evemt Names and Payload Structures
 I first tried this technique in [paola18](https://github.com/nemethmik/paola18/blob/master/src/my-ui5demo.ts) based on an article
@@ -300,7 +285,18 @@ This is a pretty neat dynamic custom module loader implementation.
 What is not really elegant in the solution is the hard-coded URL's in the component JavaScript codes
 `import { getStore } from 'http://localhost:4001/framework.js'`
 
+
+
+## Ranting on the Event of Lit 2.0 Officially Announced
+### A Quick subjective review of the Web Component landscape in 2021 Sept
+Lit-HTML is eye-opening brutally excellent tool for both regular **reactive** web application development as well as for web components. Lit Element is fantastic, too, for web components. These tools themselves are awesome, mature error-free, brilliant. The problem is with the entire web component ecosystem: there are no really great, reliable professional quality components libraries for business applications. *Vaadin Fusion* would be really decent, but it is tied heavily to their Java server stack. *Shoelace* looks awesome, but it has no data-grid/table/virtual list or any list component at all. *SAP UI5 Web Components* (not to confuse with the plain UI5), has a quite decent *UI5Table* component, but it is not up to what is expected for a demanding business app (Vaadin Grid, even the free version, is almost perfect). UI5 web components uses lit-html but not Lit Element. *Material Components* are version 0.25 and TB developed. As for *Microsoft FAST/FluidUI* web components, the technology is brutally similar to lit-html/Lit Element, but their *data-grid* component is pathetic. *Telerik* a major component manufacturer has no web component version of their libraries. *Haunted* has a great concept for hook-paradigm, and is based on lit-html, but it uses a an old version of lit-html which doesn't work with any component libraries.
+
+*Lit-Plugin* Visual Studio Code extension is fine, but it is far from perfect, when the application is getting bigger, its code completion, context sensitive support for listing properties, @-syntax event handlers is getting hit or miss. When using React/TypeScript or Angular, Visual Studio Code programmer experience is mature and reliable in this regard. In Angular you even have the *@output* concept, which is totally missing from the Custom Element specification. When you have a component toolset like React or Angular, you don't need web components, totally irrelevant, a major hassle and additional complexity, web components are alien to Angular/React. 
+
+On the other hand, *Lit* is so brilliant that, if you are open to build your own web component library, it would be the best choice.
+*Vaadin Fusion* library is really decent but their tight coupling with Java server is sever limitation, unfortunately.
+
+
 ## Other Videos Worth Watching
-- 
 - [JH: Web Components for Micro Frontends](https://www.youtube.com/watch?v=XUtCnA9WEgQ)
     [The github repo Product Details Page for the video](https://github.com/jherr/web-components-pdp/tree/master/components)

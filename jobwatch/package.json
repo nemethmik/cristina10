@@ -16,9 +16,7 @@
     "vite": "^2.5.4"
   },
   "dependencies": {
-    "@vaadin/vaadin-app-layout": "^21.0.2",
     "@vaadin/vaadin-checkbox": "^21.0.2",
-    "@vaadin/vaadin-form-layout": "^21.0.2",
     "@vaadin/vaadin-icons": "^21.0.2",
     "@vaadin/vaadin-menu-bar": "^21.0.2",
     "@vaadin/vaadin-tabs": "^21.0.2",

@@ -11,7 +11,7 @@ type TAppPages = "Config" | "Login"
 class MobileApp extends LitElement {
   @property() page:TAppPages = "Config"
   override render():TemplateResult {
-    console.log("MobileApp:render")
+    //console.log("MobileApp:render")
     return html`
       ${this.page == "Config" ? html`<page-config></page-config>` : ``}
       ${this.page == "Login" ? html`<page-login></page-login>` : ``}
@@ -22,6 +22,7 @@ class MobileApp extends LitElement {
     // WARNING!!! DON'T DEFINE an EVENT LISTENER on THE SHADOW ROOT if you want to reference "THIS"
     // this.shadowRoot!.addEventListener( DON'T DO THIS )
     this.addEventListener(TCustomEvents.ConfigDone,this.onConfigDone as EventListener)
+    this.addEventListener(TCustomEvents.LoginBack,():void=>{this.page = "Config"})
   }
   // Removel of event listeners on the app level is optional, but definitely a good practice
   override disconnectedCallback():void {
