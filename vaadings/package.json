@@ -13,7 +13,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "fix":"eslint src --fix"
+    "fix":"eslint src --fix",
+    "servor": "npx servor dist index.html 8080 --browse --reload"    
   },
   "dependencies": {
     "@vaadin/vaadin-button": "^21.0.1",

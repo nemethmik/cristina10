@@ -63,6 +63,8 @@ Note the tricky casting `this.onConfigDone as EventListener` to prevent TypeScri
  ```
 
 ## vaadings (Getting Started with Vaadin)
+<img src="./vaadings/vaadingsscreen1.jpg" width=50% />
+
 [Vaadin Fusion](https://vaadin.com/docs/latest/fusion/overview) was implemented with JavaScript on top of LitElement, but it comes with full TzpeScript tzpe definitions, too.
 [How to use Web Components, 2018 Dec 12](https://vaadin.com/learn/tutorials/using-web-components) and accompanying videos are to be followed first:
 - [How to use Web Components in a JavaScript project](https://youtu.be/88Sa-SlHRxk) 
@@ -74,6 +76,8 @@ Project setup is then
 - Copy *.eslintrc.json* from the other project
   - npm i -D @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint
 - **npm install @vaadin/vaadin-button @vaadin/vaadin-grid @vaadin/vaadin-text-field** for the example app as suggested in [How to use Web Components in a JavaScript project](https://youtu.be/88Sa-SlHRxk)
+
+So this project is just a regular TypeScript project not using Lit Element.
 
 ## tswebcomp
 After the *tsorchids* remake, I started experimenting with web components foloowing [JH Web Components Custom Elements, Templates and the Shadow DOM, 2019](https://youtu.be/_Tr9ZcXcMjQ) and the subsequent two parts.
