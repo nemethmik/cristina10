@@ -8,7 +8,7 @@ export class PageBase extends LitElement {
         section {
             display:flex;
             flex-direction:column;
-            height: 85vh;
+            height: 82vh;
         }
         header {
             //background-color: #800020;
