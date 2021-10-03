@@ -5,11 +5,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Web Components</title>
-    <style>
+    <!-- 
+        MyProduct will search for a style element with this ID, and if it find it will
+        append as the firts child element into the shadow DOM of the custom element.
+        This might be a way that global styles can be propagated down the shadow DOM tree.
+        Of course, CSS variables (a.k.a CSS custom properties) would be a lot cleaner solution.
+    -->
+    <style id="my-product-style">
         h2{color:blue;}
+        button{color:red;}
     </style>
 </head>
 <body>
+    <!-- style id="my-product-style"> Would work here, too </style -->
     <script>
         const myProduct = () => document.querySelector("my-product")
     </script>
@@ -19,9 +27,9 @@
     <button onclick="myProduct().show()">Show</button>  
     <!-- onbuy="alert('Buy Me, Please!')" doesn't work -->
     <template id="my-product-template">
-        <style>h2,button{color:red;}</style>
+        <!-- style>h2,button{color:red;}</style -->
         <h2>Hello from my-product-template defined in the HTML!</h2>
-        <div><slot/></div>
+        <div><slot></slot></div>
         <div>The price is <slot style="color:green;" name="price">PRICEPLACEHOLDER</slot> but worth every pennies</div>
         <button>Buy Me</button>
     </template>
@@ -31,7 +39,8 @@
     </my-product> 
     <script>
        myProduct().addEventListener("buy",(e)=>alert('Buy Me, Please!' + JSON.stringify(e.detail)))
-       //This won't work even when the shadow root is open :-\
+       //This won't work even when the shadow root is open; weird, hmmm
+       console.log("buy event:",myProduct().shadowRoot)
        //myProduct().shadowRoot.querySelector("button").addEventListener("click",()=>alert("Hello from Shadow DOM"))
     </script>
 </body>

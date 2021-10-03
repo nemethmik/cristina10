@@ -161,6 +161,40 @@ When a lit-element project is created with Vite (see my elena14/elana14lit branc
         //And the user can listen to that event like so:
         myProduct().addEventListener("buy",(e)=>alert('Buy Me, Please!' + JSON.stringify(e.detail)))
   ```
+- [Actually](https://youtu.be/P63MsyjvPac), in practice when you create a custom element you don't have to render your template in the shadow DOM, you can implement it in the light DOM in *innerText* and you will have the regular global CSS space, which is excellent when you want to use Bootstrap with custom elements.
+BUT, there is an (almost (total)) show-stopper: slots don't work in light DOM, only in shadow DOM; that is, you cannot do something like `<my-product name="Note 8"><h1 slot=price>999<h1><p>Great product</p></my-product>` 
+Instead, you are forced to apply a workaround (render-props) `<my-product name="Note 8" price="<h1 slot=price>999<h1>" default="<p>Great product</p>"></my-product>` This would work excellently with a tool like *Lit* but far from elegant. It was a crazy opinionated decision from the specification designers not to enable slots for the light DOM either.
+- I have implemented a way to clone automatically a *style* element in the shadow DOM
+This style (global) element is applied to the entire HTML page (the light DOM) but it has an ID, too:  
+```html
+    <style id="my-product-style">
+        h2{color:blue;}
+        button{color:red;}
+    </style>
+```
+Therefore, the MyProduct custom element class can append it to its own shadow DOM:
+```ts
+    get name():string {return this.getAttribute("name")!}
+    connectedCallback():void {
+        let template = document.getElementById("my-product-template") as HTMLTemplateElement
+        if(!template) {
+            template = document.createElement("template")
+            template.innerHTML = /*html*/`
+                <!-- Add default template -->
+            ` 
+        }        
+        const myProductStyles = document.getElementById("my-product-style")
+        if(myProductStyles) this.root.appendChild(myProductStyles.cloneNode(true))
+        this.root.appendChild(template.content.cloneNode(true))
+        this.root.querySelector("button")?.addEventListener("click",this.buyMeButtonClick)
+        this.render()
+    }
+    render():void { // Not a callback, this is just my function
+        const h2 = this.root.querySelector("h2")
+        //The first h2 element's text will be replaced with the product name
+        if(h2) h2.innerText = this.name
+    }
+```
 
 ## tsorchids
 This is a remake of [Jack Herrington Javascript Modules in detail - Part 1](https://youtu.be/mMB8DNLotDs)
