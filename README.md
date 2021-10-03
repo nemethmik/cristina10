@@ -1,6 +1,14 @@
 # cristina10
 A multi-project repo for TypeScript web server, front-end and database applications (Chirichella)
 
+## tslition
+Ionic is specifically designed for handheld small mobile applications with gorgeous look-and feel. 
+All the samples and marketing they provide are around the existing big name frameworks but the 
+[IONIC Framework on CDN](https://ionicframework.com/docs/intro/cdn#ionic-framework-cdn) is actually more tha enough for getting started, and this is again a prrof that if you learn one web component toolset, you know all others.
+Older versions are available on CDN and Shoelace is distributed via CDN, the official Lit documentation talks only about installing as an NPM package; so, for convenience this is a Vite vanilla-ts project, too. See the description of the other projects in the repo, how to setup a Vite, Lit, ESLint, TypeScript project.
+
+I copied the [Header and Footer](https://ionicframework.com/docs/layout/structure#header-and-footer) layout example and that was it.
+With some minutes of tweaking I was able to configure [dark mode](https://ionicframework.com/docs/theming/dark-mode)
 
 ## jobwatch
 Online version is available on [Azure](https://white-beach-0d4819403.azurestaticapps.net/)
