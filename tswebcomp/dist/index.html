@@ -18,7 +18,14 @@
     <button onclick="myProduct().hide()">Hide</button>  
     <button onclick="myProduct().show()">Show</button>  
     <!-- onbuy="alert('Buy Me, Please!')" doesn't work -->
-    <my-product name="Note8" style="font-size: xx-large;">
+    <template id="my-product-template">
+        <style>h2,button{color:red;}</style>
+        <h2>Hello from my-product-template defined in the HTML!</h2>
+        <div><slot/></div>
+        <div>The price is <slot style="color:green;" name="price">PRICEPLACEHOLDER</slot> but worth every pennies</div>
+        <button>Buy Me</button>
+    </template>
+    <my-product name="Note8" style="font-size: xx-large;" shadow>
         <span slot="price">$560</span>
         <h2>One of the best smartphones ever.</h2>
     </my-product> 

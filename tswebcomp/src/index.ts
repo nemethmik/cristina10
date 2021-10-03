@@ -7,15 +7,19 @@ export type TProductDetails = {
 //     document.querySelector("my-product")?.setAttribute("name","iPhone7")
 // }
 // document.getElementById("changeproduct")?.addEventListener("click",changeProduct)
-const templString = /*html*/`
-<style>h2,button{color:red;}</style>
-<h2>Hello!</h2>
-<div><slot/></div>
-<div>The price is <slot style="color:green;" name="price"/> but worth every pennies</div>
-<button>Buy Me</button>
-` 
-const template = document.createElement("template")
-template.innerHTML = templString
+// A template can come from the HTML page, where it is under the complete control of the user.
+const template = document.getElementById("my-product-template") as HTMLTemplateElement
+
+// Or, the template can be defined as part of the custom element.
+// const templString = /*html*/`
+// <style>h2,button{color:red;}</style>
+// <h2>Hello!</h2>
+// <div><slot/></div>
+// <div>The price is <slot style="color:green;" name="price"/> but worth every pennies</div>
+// <button>Buy Me</button>
+// ` 
+// const template = document.createElement("template")
+// template.innerHTML = templString
 class MyProduct extends HTMLElement {
     // static t2 = document.createElement("template")
     // This syntax doesn't seem to work in browsers :-()
@@ -25,12 +29,16 @@ class MyProduct extends HTMLElement {
     //     <h2>Hello!</h2>
     //     ` 
     // }
-    static get observedAttributes():string[] {return ["name"]}
+    static get observedAttributes():string[] {return ["name", "shadow"]}
     get name():string {return this.getAttribute("name")!}
     set name(val:string) {this.setAttribute("name",val)}
+    get shadow():boolean {return this.getAttribute("shadow") != null && this.getAttribute("shadow") != "false"}
+    get root():ShadowRoot | HTMLElement {
+        return this.shadowRoot ? this.shadowRoot as ShadowRoot : this
+    }
     constructor(){
         super()
-        this.attachShadow({mode:"open"})
+        if(this.shadow) this.attachShadow({mode:"open"})
         // console.log("t2",MyProduct.t2.content)
         // this.shadowRoot!.innerHTML = `
         // <style>h2{color:red;}</style>
@@ -50,32 +58,39 @@ class MyProduct extends HTMLElement {
         this.dispatchEvent(new CustomEvent("buy",{detail:productDetails}))
     }
     connectedCallback():void {
+        // Unlike in LitElement no connectedCallback defined in HMLElement :-)
+        //super.connectedCallback()
         console.log("connectedCallback:in",this.getAttribute("name"))
         //this.shadowRoot!.innerHTML = templString //defined above the class.
         // Using Template is the more standard way
-        this.shadowRoot?.appendChild(template.content.cloneNode(true))
+        this.root.appendChild(template.content.cloneNode(true))
         //Binding is very important for method functions otherwise the function will be attached to the button not to this class
         //this.shadowRoot?.querySelector("button")?.addEventListener("click",this.buyMeButtonClick.bind(this))
         //No need when function is defined with lambda syntax
-        this.shadowRoot?.querySelector("button")?.addEventListener("click",this.buyMeButtonClick)
+        this.root.querySelector("button")?.addEventListener("click",this.buyMeButtonClick)
         //this.shadowRoot?.querySelector("button")?.addEventListener("click",()=>this.dispatchEvent(new Event("buy",{})))
         this.render()
         console.log("connectedCallback:out",this.getAttribute("name"))
     }
     disconnectedCallback():void { // I don't see why it is important?
-        this.shadowRoot?.querySelector("button")?.removeEventListener("click",this.buyMeButtonClick)
+        this.root.querySelector("button")?.removeEventListener("click",this.buyMeButtonClick)
     }
     render():void { // Not a callback, this is just my function
-        const h2 = this.shadowRoot?.querySelector("h2")
+        const h2 = this.root.querySelector("h2")
         // if(h2) h2.innerText += this.getAttribute("name")
         //const n = this.getAttribute("name")
         if(h2 /*&& n*/) h2.innerText = this.name
     }
-    attributeChangedCallback(/*name:string,oldValue:string,newValue:string*/):void {
-        console.log("attributeChangedCallback")
+    attributeChangedCallback(name:string,oldValue:string,newValue:string):void {
+        console.log(`attributeChangedCallback ${name} "${oldValue}" "${newValue}"`)
+        if(name == "shadow") {
+            if(newValue == "false" && oldValue == "true") console.warn("Cannot remove a shadow root")
+        }
         //if(name == "name") 
             this.render()
         //}
+        // No such a function to call back
+        //super.attributeChangedCallback(name,oldValue,newValue)
     }
     hide():void {
         this.style.display = "none"

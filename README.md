@@ -90,12 +90,20 @@ I changed *.gitignore*, not to exclude the entire *dist* folder, just ignore `di
 
 After cloning, the steps are exactly the same as in *tsorchids* project, but the project root folder is *tswebcomp*, of course.
 
-For the full explanation of the videos, firts JHerr's then mine.
+For the full explanation of the videos, first watch JHerr's then mine.
 Here are the main points when working with web components:
 - What is the difference between an open and closed shadow root? Here is a nice explanation [open-vs-closed-shadow-dom](https://blog.revillweb.com/open-vs-closed-shadow-dom-9f3d7427d1af)
   - The short answer is that with close shadow root, you should use the object returned by the *attachShadow* function and use that for building the shadow DOM.
 - *Slots* work only in the shadow DOM.
-- You can build custom elements (aka web components) with Bootstrap, too, without using the shadow DOM, but then you will not have slots and all the styling is cascading through the components in the elements defined in the innerHTML of the custom element.
+- You can build custom elements (aka web components) with Bootstrap, too, without using the shadow DOM, but then **you will not have slots** and all the styling is cascading through the components in the elements defined in the innerHTML of the custom element.
+  - To demonstrate that slots are available only in the shadow DOM I have added an attribute to my-product custom element. When shadow is no defined or its value is false, then the slot-replacement machinery is lost when instantiating a custom element:
+  ```html
+    <my-product name="Note8" style="font-size: xx-large;" shadow>
+        <span slot="price">$560</span>
+        <h2>One of the best smartphones ever.</h2>
+    </my-product> 
+  ``` 
+  This is a major limitation, and (almost) a (total) show stopper for using custom elements with lith DOM building librraies based on Bootstrap.
 - You cannot use *input* elements from the shadow DOM in combination with an outside *form*.
   - You have to add *fordata* event listener and then : (for more details see [formdata-event example](https://glitch.com/edit/#!/formdata-event?path=custom-input.js%3A5%3A3))
   Apple browsers don't support fordata events. Fortnately Apple is not relevant for business applications, and Chrome is available on all Apple platforms.
