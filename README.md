@@ -1,7 +1,19 @@
 # cristina10
 A multi-project repo for TypeScript web server, front-end and database applications (Chirichella)
 
+## tslitstrap
+
+The extreme complexity of styling Shadow DOM s because of its strict encapsulation is a major hindrance of web components becoming more popular.
+Fortunately Custom Elements can be defined with Light DOM, too,
+[Bootstrap Web Components #28131](https://github.com/twbs/bootstrap/issues/28131) is nice discussion with examples how Bootstrap could be used with light DOM custom elements.
+In this discussion [blikblum's example](https://github.com/twbs/bootstrap/issues/28131#issuecomment-586651225) shows what can be achieved.
+Here is [another interesting discussion](https://github.com/WICG/webcomponents/issues/909) about how shadow DOM could be made more programmer's friendly.
+
+
 ## tslition
+
+On line demo on Azure [calm-smoke](https://calm-smoke-0d3ee6603.azurestaticapps.net/)
+
 Ionic is specifically designed for handheld small mobile applications with gorgeous look-and feel. 
 All the samples and marketing they provide are around the existing big name frameworks but the 
 [IONIC Framework on CDN](https://ionicframework.com/docs/intro/cdn#ionic-framework-cdn) is actually more tha enough for getting started, and this is again a prrof that if you learn one web component toolset, you know all others.
@@ -9,6 +21,10 @@ Older versions are available on CDN and Shoelace is distributed via CDN, the off
 
 I copied the [Header and Footer](https://ionicframework.com/docs/layout/structure#header-and-footer) layout example and that was it.
 With some minutes of tweaking I was able to configure [dark mode](https://ionicframework.com/docs/theming/dark-mode)
+
+I might impelement the entire [Conference demo application](https://github.com/ionic-team/ionic-react-conference-app/blob/master/src/App.tsx) 
+
+**... and that was all: without a single sample, reverse engineering back from the React and Angular samples, it's a dead end**
 
 ## jobwatch
 Online version is available on [Azure](https://white-beach-0d4819403.azurestaticapps.net/)
