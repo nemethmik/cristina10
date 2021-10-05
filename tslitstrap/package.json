@@ -3,17 +3,22 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc && vite build && copyfiles people.json dist",
     "serve": "vite preview"
   },
   "devDependencies": {
     "@types/bootstrap": "^5.1.6",
+    "@typescript-eslint/eslint-plugin": "^4.33.0",
+    "@typescript-eslint/parser": "^4.33.0",
+    "copyfiles": "^2.4.1",
+    "eslint": "^7.32.0",
     "rollup-plugin-lit-css": "^3.0.2",
     "typescript": "^4.3.2",
     "vite": "^2.6.0"
   },
   "dependencies": {
     "@adobe/lit-mobx": "^2.0.0-rc.4",
+    "@lit-labs/task": "^1.0.0",
     "@popperjs/core": "^2.10.2",
     "bootstrap": "^5.1.1",
     "bootstrap-icons": "^1.5.0",

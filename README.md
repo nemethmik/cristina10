@@ -100,12 +100,37 @@ The extreme complexity of styling Shadow DOM s because of its strict encapsulati
   - The same guy made a WebPack loader, too: [lit-css-loader](https://github.com/bennypowers/lit-css/tree/main/packages/lit-css-loader)
 - The [Bootstrap starter template](https://github.com/twbs/bootstrap-npm-starter) on GitHub uses Bootstrap V4 and is configured with its own build toolset.
 - Installing Bootstrap and Lit:
-  - **npm i bootstrap bootstrap-icons @popperjs/core lit mobx @adobe/lit-mobx**
-  - **npm i -D @types/bootstrap rollup-plugin-lit-css eslint**
+  - **npm i bootstrap bootstrap-icons @popperjs/core lit mobx @adobe/lit-mobx @lit-labs/task**
+  - **npm i -D @types/bootstrap rollup-plugin-lit-css eslint copyfiles**
   - **import bootstrap from "bootstrap"** is when you want to use toast, see the ksenia25 videos
   - I have already experimented with Bootstrap in [ksenia25](https://github.com/nemethmik/ksenia25) where I was experimenting with WebPack5 and I recorded a number of accompanying videos.
 - The Bootrap documentation describing webpack setup explains that [you may use Bootstrap’s ready-to-use CSS by simply adding this line to your project’s entry point](https://getbootstrap.com/docs/5.0/getting-started/webpack/#importing-compiled-css) **import "bootstrap/dist/css/bootstrap.min.css"**
-- [npm i @lit-labs/task](https://github.com/lit/lit/blob/main/packages/labs/task/src/task.ts) is really light-weight task controller for executing long running async calls. It shows similarities React's useEffect. 
+- **unsafeCSS** seems to be a perfect tool to import Bootstrap css into LitElement as CSSResult. No need for fussing with the [native CSSStyleSheet and replaceSync](https://github.com/lit/lit/blob/main/packages/reactive-element/src/css-tag.ts)
+  ```ts
+  import bootstrapcss from "bootstrap/dist/css/bootstrap.min.css"
+  //...
+  class BootBase extends LitElement {
+    static styles = [unsafeCSS(bootstrapcss)]
+  }
+  //MobiX is needed only for elements contacted to the app state store
+  @customElement("boot-app")
+  class BootApp extends MobxReactionUpdate(BootBase) {
+    static styles = [...BootBase.styles, css`:host{text-align: center;}`]
+    //...
+  }
+  declare global { interface HTMLElementTagNameMap { "boot-app": BootApp}}
+  ```
+  - Regular *CSSStyleSheet* and *replaceSync* could be use too as an alternative to *unsafeCSS*:
+    ```ts
+    unsafeCSS does something similar as this sequence
+    const bootstrapstyles = new CSSStyleSheet()
+    //@ts-ignore
+    bootstrapstyles.replaceSync(bootstrapcss) 
+    ...
+    // Can be added this to LitElement classes like 
+    static styles = [bootstrapstyles as CSSResultOrNative]
+    ```
+- [npm i @lit-labs/task](https://github.com/lit/lit/blob/main/packages/labs/task/src/task.ts) is really light-weight task controller for executing long running async calls. It shows similarities React's useEffect. It can be installed as an [NPM package](https://www.npmjs.com/package/@lit-labs/task).
 
 ## jobwatch
 Online version is available on [Azure](https://white-beach-0d4819403.azurestaticapps.net/)
