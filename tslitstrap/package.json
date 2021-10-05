@@ -1,5 +1,5 @@
 {
-  "name": "tslition",
+  "name": "tslitstrap",
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
@@ -7,10 +7,16 @@
     "serve": "vite preview"
   },
   "devDependencies": {
+    "@types/bootstrap": "^5.1.6",
+    "rollup-plugin-lit-css": "^3.0.2",
     "typescript": "^4.3.2",
     "vite": "^2.6.0"
   },
   "dependencies": {
+    "@adobe/lit-mobx": "^2.0.0-rc.4",
+    "@popperjs/core": "^2.10.2",
+    "bootstrap": "^5.1.1",
+    "bootstrap-icons": "^1.5.0",
     "lit": "^2.0.0"
   }
 }

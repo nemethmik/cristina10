@@ -3,12 +3,107 @@ A multi-project repo for TypeScript web server, front-end and database applicati
 
 ## tslitstrap
 
-The extreme complexity of styling Shadow DOM s because of its strict encapsulation is a major hindrance of web components becoming more popular.
-Fortunately Custom Elements can be defined with Light DOM, too,
-[Bootstrap Web Components #28131](https://github.com/twbs/bootstrap/issues/28131) is nice discussion with examples how Bootstrap could be used with light DOM custom elements.
-In this discussion [blikblum's example](https://github.com/twbs/bootstrap/issues/28131#issuecomment-586651225) shows what can be achieved.
-Here is [another interesting discussion](https://github.com/WICG/webcomponents/issues/909) about how shadow DOM could be made more programmer's friendly.
+*Bootstrap* could be used easily via CDN, but TypeScript and Lit are not so it's better to create a *Vite* or *WebPack* project. Then the next major question is Shadow DOM or Light DOM web components you want to use?
 
+The extreme complexity of styling Shadow DOM s because of its strict encapsulation is a major hindrance of web components becoming more popular.
+- Fortunately Custom Elements can be defined with Light DOM, too,
+[Bootstrap Web Components #28131](https://github.com/twbs/bootstrap/issues/28131) is nice discussion with examples how Bootstrap could be used with light DOM custom elements.
+- In this discussion [blikblum's example](https://github.com/twbs/bootstrap/issues/28131#issuecomment-586651225) shows what can be achieved.
+  - Here is [another interesting discussion](https://github.com/WICG/webcomponents/issues/909) about how shadow DOM could be made more programmer's friendly.
+- In [using-bootstrap-in-web-components-shadowdom](https://stackoverflow.com/questions/66234047/using-bootstrap-in-web-components-shadowdom) If you don't use shadow DOM, you don't need these at all.
+  ```ts
+  import bootstrap from './path/to/bootstrap.css';
+  class MyElement extends LitElement {
+    static styles = bootstrap; // If your build system already converted
+                              // the stylesheet to a CSSResult
+    static styles = unsafeCss(bootstrap); // If bootstrap is plain text
+  }
+  ```
+  - This guy explains that rollutup an even webpack has tools to convert CSS to CSSResult.
+  [rollup-plugin-postcss-lit](https://www.npmjs.com/package/rollup-plugin-postcss-lit) This plugin is pre-configured to work with Vite, just add it to plugins and your styles will be Lit-ified
+  `npm i -D rollup-plugin-postcss-lit`
+  ```js
+  import {LitElement, css} from 'lit'
+  import {customElement} from 'lit/decorators.js'
+  import myStyles from './styles.css'
+  import otherStyles from './other-styles.scss'
+  @customElement('my-component')
+  export class MyComponent extends LitElement {
+    // Add a single style
+    static styles = myStyles;
+    // Or more!
+    static styles = [myStyles, otherStyles, css`
+      .foo {
+        color: ${...};
+      }
+    `];
+    render() {
+      // ...
+    }
+  }
+
+  // vite.config.js/ts
+  import postcssLit from 'rollup-plugin-postcss-lit';
+  export default {
+    plugins: [
+      postcssLit(),
+    ],
+  };
+  //And here are the options:
+  postcssLit({
+    // A glob (or array of globs) of files to include.
+    // Default: **/*.{css,sss,pcss,styl,stylus,sass,scss,less}
+    include: ...,
+    // A glob (or array of globs) of files to exclude.
+    // Default: null
+    exclude: ...,
+    // A string denoting the name of the package from which to import the `css`
+    // template tag function. For lit-element this can be changed to 'lit-element'
+    // Default: 'lit'
+    importPackage: ...,
+  }),
+  ```
+  At the end of the documentation of this plugin it says that "This plugin is meant to be used with *rollup-plugin-postcss*. If you only need to load plain css files in your LitElement components, consider using *rollup-plugin-lit-css*"
+  - And this is the rollup plugin suggested above [rollup-plugin-lit-css](https://www.npmjs.com/package/rollup-plugin-lit-css)
+  ```ts
+  /* css-in-css.css */
+  :host {
+    display: block;
+  }
+  h1 {
+    color: hotpink;
+  }
+
+  import { LitElement, customElement, html } from 'lit-element';
+  import style from './css-in-css.css';
+  @customElement('css-in-css')
+  class CSSInCSS extends LitElement {
+    static get styles() {
+      return [style];
+    }
+    render() {
+      return html`<h1>It's Lit!</h1>`;
+    }
+  }
+
+  import config from './rollup.config.rest.js'
+  import litcss from 'rollup-plugin-lit-css';
+  export default {
+    ...config,
+    plugins: [
+      litcss({ include, exclude, uglify })
+    ]
+  }
+  ```
+  - The same guy made a WebPack loader, too: [lit-css-loader](https://github.com/bennypowers/lit-css/tree/main/packages/lit-css-loader)
+- The [Bootstrap starter template](https://github.com/twbs/bootstrap-npm-starter) on GitHub uses Bootstrap V4 and is configured with its own build toolset.
+- Installing Bootstrap and Lit:
+  - **npm i bootstrap bootstrap-icons @popperjs/core lit @adobe/lit-mobx**
+  - **npm i -D @types/bootstrap rollup-plugin-lit-css eslint**
+  - **import bootstrap from "bootstrap"** is when you want to use toast, see the ksenia25 videos
+  - I have already experimented with Bootstrap in [ksenia25](https://github.com/nemethmik/ksenia25) where I was experimenting with WebPack5 and I recorded a number of accompanying videos.
+- The Bootrap documentation describing webpack setup explains that [you may use Bootstrap’s ready-to-use CSS by simply adding this line to your project’s entry point](https://getbootstrap.com/docs/5.0/getting-started/webpack/#importing-compiled-css) **import "bootstrap/dist/css/bootstrap.min.css"**
+- [npm i @lit-labs/task](https://github.com/lit/lit/blob/main/packages/labs/task/src/task.ts) is really light-weight task controller for executing long running async calls. It shows similarities React's useEffect. 
 
 ## tslition
 
