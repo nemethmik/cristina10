@@ -98,7 +98,7 @@ The extreme complexity of styling Shadow DOM s because of its strict encapsulati
   - The same guy made a WebPack loader, too: [lit-css-loader](https://github.com/bennypowers/lit-css/tree/main/packages/lit-css-loader)
 - The [Bootstrap starter template](https://github.com/twbs/bootstrap-npm-starter) on GitHub uses Bootstrap V4 and is configured with its own build toolset.
 - Installing Bootstrap and Lit:
-  - **npm i bootstrap bootstrap-icons @popperjs/core lit @adobe/lit-mobx**
+  - **npm i bootstrap bootstrap-icons @popperjs/core lit mobx @adobe/lit-mobx**
   - **npm i -D @types/bootstrap rollup-plugin-lit-css eslint**
   - **import bootstrap from "bootstrap"** is when you want to use toast, see the ksenia25 videos
   - I have already experimented with Bootstrap in [ksenia25](https://github.com/nemethmik/ksenia25) where I was experimenting with WebPack5 and I recorded a number of accompanying videos.
