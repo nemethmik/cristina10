@@ -11,7 +11,7 @@ export type TPeopleActions =
   | {type: "Edit", id: number} //Open a dialog box for the user to modify the data
   | {type: "Load", numberOfPeopleLoaded: number}
   | {type: "Delete", id: number}
-  | {type: "Add", todo: TPerson} 
+  | {type: "Add", person: TPerson} 
 export function dispatchPeopleEvent(el:HTMLElement,detail:TPeopleActions):void {
   el.dispatchEvent(new CustomEvent(TPeopleEvent,{detail,composed:true}))
 }
@@ -19,7 +19,7 @@ export function dispatchPeopleEvent(el:HTMLElement,detail:TPeopleActions):void {
 export type TPerson = {
     firstName: string,
     lastName: string,
-    address: {
+    address?: {
         street: string,
         city: string,
         state: string,
@@ -54,6 +54,9 @@ class AppStore {
         }
     }
     setPeople(people:TPerson[]):void {this._people = people}
+    addPerson(p:TPerson):void {
+        this.setPeople([p,...this._people])
+    }
 }
 
 export const appStore = new AppStore()

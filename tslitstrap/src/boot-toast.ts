@@ -7,12 +7,16 @@ import {BootBase} from "./boot-base"
 export class BootToast extends BootBase {
     @property() small = "" 
     @property() message = "" 
-    @query(".toast") toast!:HTMLElement
+    @query(".toast") toastEl!:HTMLElement
+    private _toastBox:Toast | undefined = undefined
+    get toastBox():Toast {
+        if(!this._toastBox) this._toastBox = new Toast(this.toastEl,{animation:true,autohide:true,delay:2000})
+        return this._toastBox
+    }
     show(small:string, message:string):void {
         this.small = small
         this.message = message
-        const toast = new Toast(this.toast,{animation:true,autohide:true,delay:2000})
-        toast.show()
+        this.toastBox.show()
     }
     override render():TemplateResult {return html`
         <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
