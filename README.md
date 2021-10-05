@@ -3,6 +3,8 @@ A multi-project repo for TypeScript web server, front-end and database applicati
 
 ## tslitstrap
 
+On-line sample on Azure [white-pond](https://white-pond-01b194d03.azurestaticapps.net/)
+
 *Bootstrap* could be used easily via CDN, but TypeScript and Lit are not so it's better to create a *Vite* or *WebPack* project. Then the next major question is Shadow DOM or Light DOM web components you want to use?
 
 The extreme complexity of styling Shadow DOM s because of its strict encapsulation is a major hindrance of web components becoming more popular.
@@ -104,22 +106,6 @@ The extreme complexity of styling Shadow DOM s because of its strict encapsulati
   - I have already experimented with Bootstrap in [ksenia25](https://github.com/nemethmik/ksenia25) where I was experimenting with WebPack5 and I recorded a number of accompanying videos.
 - The Bootrap documentation describing webpack setup explains that [you may use Bootstrap’s ready-to-use CSS by simply adding this line to your project’s entry point](https://getbootstrap.com/docs/5.0/getting-started/webpack/#importing-compiled-css) **import "bootstrap/dist/css/bootstrap.min.css"**
 - [npm i @lit-labs/task](https://github.com/lit/lit/blob/main/packages/labs/task/src/task.ts) is really light-weight task controller for executing long running async calls. It shows similarities React's useEffect. 
-
-## tslition
-
-On line demo on Azure [calm-smoke](https://calm-smoke-0d3ee6603.azurestaticapps.net/)
-
-Ionic is specifically designed for handheld small mobile applications with gorgeous look-and feel. 
-All the samples and marketing they provide are around the existing big name frameworks but the 
-[IONIC Framework on CDN](https://ionicframework.com/docs/intro/cdn#ionic-framework-cdn) is actually more tha enough for getting started, and this is again a prrof that if you learn one web component toolset, you know all others.
-Older versions are available on CDN and Shoelace is distributed via CDN, the official Lit documentation talks only about installing as an NPM package; so, for convenience this is a Vite vanilla-ts project, too. See the description of the other projects in the repo, how to setup a Vite, Lit, ESLint, TypeScript project.
-
-I copied the [Header and Footer](https://ionicframework.com/docs/layout/structure#header-and-footer) layout example and that was it.
-With some minutes of tweaking I was able to configure [dark mode](https://ionicframework.com/docs/theming/dark-mode)
-
-I might impelement the entire [Conference demo application](https://github.com/ionic-team/ionic-react-conference-app/blob/master/src/App.tsx) 
-
-**... and that was all: without a single sample, reverse engineering back from the React and Angular samples, it's a dead end**
 
 ## jobwatch
 Online version is available on [Azure](https://white-beach-0d4819403.azurestaticapps.net/)
