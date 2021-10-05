@@ -7,7 +7,7 @@ import {BootBase, appStore} from "./boot-base"
 class BootPeople extends MobxReactionUpdate(BootBase) {
   override connectedCallback():void {
     super.connectedCallback()
-    appStore.loadData(false)
+    appStore.loadData(false,this)
   }
   override render():TemplateResult {
     let id = 1
@@ -22,7 +22,7 @@ class BootPeople extends MobxReactionUpdate(BootBase) {
         </tr>
       </thead>
       <tbody>
-        ${appStore.people.map((p) => html`
+        ${appStore.peopleMap((p) => html`
           <tr>
             <th scope="row">${id++}</th>
             <td>${p.firstName}</td>
@@ -33,7 +33,7 @@ class BootPeople extends MobxReactionUpdate(BootBase) {
       </tbody>
     </table>
     <p>
-      ${appStore.people.length ? html`<h2>Number of people ${appStore.people.length}</h2>` : html`
+      ${appStore.numberOfPeople ? html`<h2>Number of people ${appStore.numberOfPeople}</h2>` : html`
         <div class="spinner-grow text-primary" role="status">
           <span class="visually-hidden">Loading...</span>
         </div>
