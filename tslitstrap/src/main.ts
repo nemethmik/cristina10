@@ -1,17 +1,15 @@
 import {html, css, TemplateResult, } from "lit"
 import {customElement, query} from "lit/decorators.js"
-//import {MobxReactionUpdate} from "@adobe/lit-mobx"
+import {MobxReactionUpdate} from "@adobe/lit-mobx"
 import {BootBase,appStore,TPeopleEvent,TPeopleActions} from "./boot-base"
-import "./boot-people"
+import "./page-people"
+import "./page-headers"
 import "./boot-toast"
 import {BootToast} from "./boot-toast"
-import "./boot-addperson"
-import {BootAddPerson} from "./boot-addperson"
 
 //MobiX is needed only for elements contacted to the app state store
 @customElement("boot-app")
-class BootApp extends BootBase {
-  static styles = [...BootBase.styles, css`:host{text-align: center;}`]
+class BootApp extends MobxReactionUpdate(BootBase) {
   override connectedCallback():void {
     this.addEventListener(TPeopleEvent,((e:CustomEvent):void => {
       const detail = e.detail as TPeopleActions
@@ -23,22 +21,10 @@ class BootApp extends BootBase {
     super.connectedCallback()
   }
   @query("boot-toast") toast!:BootToast
-  @query("boot-addperson") addPerson!:BootAddPerson
   override render():TemplateResult { return html`
-    <h1>Hello BootStrap in Shadow DOM!</h1>
-    <button type="button" class="btn btn-primary"  
-      @click=${():void => {
-        appStore.loadData(true,this)
-      }}
-      >Load Remote Data</button>
-    <button type="button" class="btn btn-primary"  
-    @click=${():void => {
-      this.addPerson.show(this)
-    }}
-    >Add Person</button>
-    <boot-people></boot-people>
+    ${appStore.page == "People" ? html`<page-people></page-people>` : undefined}
+    ${appStore.page == "Headers" ? html`<page-headers></page-headers>` : undefined}
     <boot-toast small="Small Text" message="Message Text"></boot-toast>
-    <boot-addperson></boot-addperson>
   `}
 }
 declare global { interface HTMLElementTagNameMap { "boot-app": BootApp}}

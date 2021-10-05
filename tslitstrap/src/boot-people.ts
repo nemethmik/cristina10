@@ -7,6 +7,8 @@ import {BootBase, appStore} from "./boot-base"
 class BootPeople extends MobxReactionUpdate(BootBase) {
   override connectedCallback():void {
     super.connectedCallback()
+    //This is the web component that is triggering data load
+    //The app state store is not automatically loads data, it's always requested by a UI component 
     appStore.loadData(false,this)
   }
   override render():TemplateResult {

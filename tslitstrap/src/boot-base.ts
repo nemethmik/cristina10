@@ -16,6 +16,8 @@ export function dispatchPeopleEvent(el:HTMLElement,detail:TPeopleActions):void {
   el.dispatchEvent(new CustomEvent(TPeopleEvent,{detail,composed:true}))
 }
 
+export const TAppPages = {People:"People",Headers:"Headers"} as const
+
 export type TPerson = {
     firstName: string,
     lastName: string,
@@ -35,8 +37,13 @@ export class BootBase extends LitElement {
 }
 
 class AppStore {
+    private _page:keyof typeof TAppPages = "People"
+    get page():keyof typeof TAppPages {return this._page}
+    setPage(page:keyof typeof TAppPages):void {
+        this._page = page
+    }
     private _people:TPerson[] = []
-    get people():TPerson[] {return [...this._people]}
+    //get people():TPerson[] {return [...this._people]}
     get numberOfPeople():number {return this._people.length}
     peopleMap(f:(p:TPerson)=>TemplateResult):TemplateResult[] {
         return this._people.map(f)
@@ -45,12 +52,16 @@ class AppStore {
         makeAutoObservable(this)
     }
     public async loadData(remote = true,notificationVia:HTMLElement | null = null):Promise<void> {
-        this.setPeople([])
-        //await new Promise((r) => setTimeout(r, 1000)) // This is just a delayer to simulate long running tasks
-        const endpoint = remote ? "https://demo.vaadin.com/demo-data/1.0/people?count=200" : "./people.json"
-        this.setPeople((await (await fetch(endpoint)).json()).result)
-        if(notificationVia) {
-            dispatchPeopleEvent(notificationVia,{type:"Load",numberOfPeopleLoaded: this.numberOfPeople})
+        //When the application is just paging around no need to reload the data unless
+        //remote reload is enforced. 
+        if(this.numberOfPeople == 0 || remote) {
+            this.setPeople([])
+            //await new Promise((r) => setTimeout(r, 1000)) // This is just a delayer to simulate long running tasks
+            const endpoint = remote ? "https://demo.vaadin.com/demo-data/1.0/people?count=200" : "./people.json"
+            this.setPeople((await (await fetch(endpoint)).json()).result)
+            if(notificationVia) {
+                dispatchPeopleEvent(notificationVia,{type:"Load",numberOfPeopleLoaded: this.numberOfPeople})
+            }
         }
     }
     setPeople(people:TPerson[]):void {this._people = people}
