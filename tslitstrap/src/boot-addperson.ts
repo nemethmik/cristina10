@@ -2,8 +2,10 @@ import {Modal} from "bootstrap"
 import {html, TemplateResult} from "lit"
 import {customElement,query} from "lit/decorators.js"
 import {ref,createRef} from "lit/directives/ref.js"
+import {msg,localized} from "@lit/localize"
 import {BootBase,appStore,dispatchPeopleEvent} from "./boot-base"
 
+@localized()
 @customElement("boot-addperson")
 export class BootAddPerson extends BootBase {
     @query(".modal") _modalEl!:HTMLElement
@@ -21,25 +23,25 @@ export class BootAddPerson extends BootBase {
         this.modalDialog.show(relatedTarget)
     }
     override render():TemplateResult {return html`
-    <div class="modal fade"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">New Person Details</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title" id="exampleModalLabel">${msg("New Person Details")}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label=${msg("Close")}></button>
             </div>
             <div class="modal-body">
                 <form>
                 <div class="mb-3">
-                    <label class="col-form-label">First Name:</label> <!-- for="recipient-name"  -->
+                    <label class="col-form-label">${msg(`First Name:`)}</label>
                     <input ${ref(this._firstName)} type="text" class="form-control">
                 </div>
                 <div class="mb-3">
-                    <label class="col-form-label">Last Name:</label>
+                    <label class="col-form-label">${msg(`Last Name:`)}</label>
                     <input ${ref(this._lastName)} type="text" class="form-control">
                 </div>
                 <div class="mb-3">
-                    <label class="col-form-label">Email:</label>
+                    <label class="col-form-label">${msg(`Email:`)}</label>
                     <input ${ref(this._email)} type=email class="form-control" id="handle"></textarea>
                 </div>
                 </form>
@@ -55,8 +57,8 @@ export class BootAddPerson extends BootBase {
                         dispatchPeopleEvent(this,{type:"Add",person:p})    
                         this.modalDialog.hide()
                     }}
-                >Save</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                >${msg("Save")}</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">${msg(`Cancel`)}</button>
             </div>
             </div>
         </div>

@@ -2,21 +2,74 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
 <file target-language="fr_FR" source-language="en" original="lit-localize-inputs" datatype="plaintext">
 <body>
+<trans-unit id="s5aa69028298c66e8">
+  <source>New Person Details</source>
+</trans-unit>
+<trans-unit id="s5e8250fb85d64c23">
+  <source>Close</source>
+</trans-unit>
+<trans-unit id="s8f9e71bb4427e946">
+  <source>First Name:</source>
+</trans-unit>
+<trans-unit id="sfab5e4723ff2110e">
+  <source>Last Name:</source>
+</trans-unit>
+<trans-unit id="s8430c71b7abe6807">
+  <source>Email:</source>
+</trans-unit>
+<trans-unit id="s33f85f24c0f5f008">
+  <source>Save</source>
+</trans-unit>
+<trans-unit id="s2ceb11be2290bb1b">
+  <source>Cancel</source>
+</trans-unit>
+<trans-unit id="safa3c1b669827492">
+  <source>Bootstrap Toast</source>
+</trans-unit>
+<trans-unit id="s9a708ea98d35ded7">
+  <source>Hello BootStrap in Shadow DOM!</source>
+</trans-unit>
+<trans-unit id="s125a8abb80c01c6b">
+  <source>Load Remote Data</source>
+</trans-unit>
+<trans-unit id="sad33f8293bf98049">
+  <source>Add Person</source>
+</trans-unit>
+<trans-unit id="sdcedb1272e7ec098">
+  <source>Page Headers</source>
+</trans-unit>
+<trans-unit id="s83b62e9afb60ad42">
+  <source>Simple header CLICK HOME to Navigate Back</source>
+</trans-unit>
 <trans-unit id="s2ec6be1b6544c74f">
   <source>People Re-loaded</source>
   <target>FRPeople Re-loaded</target>
 </trans-unit>
-<trans-unit id="sd693c658a20e3abd">
-  <source>persons found</source>
-  <target>FRpersons found</target>
+<trans-unit id="sd976e241583c9b5f">
+  <source><ph id="0">${detail.numberOfPeopleLoaded}</ph> persons found</source>
 </trans-unit>
 <trans-unit id="sc7e09db45da69138">
   <source>New Person Added</source>
   <target>FRNew Person Added</target>
 </trans-unit>
-<trans-unit id="s235de2fdfd542145">
-  <source>added</source>
-  <target>FRadded</target>
+<trans-unit id="sfc42e89b6c6ddc37">
+  <source><ph id="0">${detail.person.firstName}</ph> added</source>
+</trans-unit>
+<trans-unit id="email-address">
+  <note>Email Address of the Person</note>
+  <source>Handle</source>
+</trans-unit>
+<trans-unit id="first-name">
+  <note>First Name of the Person</note>
+  <source>First</source>
+</trans-unit>
+<trans-unit id="home-button">
+  <note>Home button</note>
+  <source>Home</source>
+</trans-unit>
+<trans-unit id="last-name">
+  <note>Last Name of the Person</note>
+  <source>Last</source>
 </trans-unit>
 </body>
 </file>

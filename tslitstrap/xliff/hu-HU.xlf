@@ -2,21 +2,93 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
 <file target-language="hu-HU" source-language="en" original="lit-localize-inputs" datatype="plaintext">
 <body>
+<trans-unit id="s5aa69028298c66e8">
+  <source>New Person Details</source>
+  <target>Új személy adatai</target>
+</trans-unit>
+<trans-unit id="s5e8250fb85d64c23">
+  <source>Close</source>
+  <target>Becsuk</target>
+</trans-unit>
+<trans-unit id="s8f9e71bb4427e946">
+  <source>First Name:</source>
+  <target>Keresztnév</target>
+</trans-unit>
+<trans-unit id="sfab5e4723ff2110e">
+  <source>Last Name:</source>
+  <target>Családi név</target>
+</trans-unit>
+<trans-unit id="s8430c71b7abe6807">
+  <source>Email:</source>
+  <target>Emailcím</target>
+</trans-unit>
+<trans-unit id="s33f85f24c0f5f008">
+  <source>Save</source>
+  <target>Mentés</target>
+</trans-unit>
+<trans-unit id="s2ceb11be2290bb1b">
+  <source>Cancel</source>
+  <target>Mégsem</target>
+</trans-unit>
+<trans-unit id="safa3c1b669827492">
+  <source>Bootstrap Toast</source>
+  <target>Üzenetpanel</target>
+</trans-unit>
+<trans-unit id="s9a708ea98d35ded7">
+  <source>Hello BootStrap in Shadow DOM!</source>
+  <target>Üdv Bootstrap az Árnyék DOM-ben</target>
+</trans-unit>
+<trans-unit id="s125a8abb80c01c6b">
+  <source>Load Remote Data</source>
+  <target>Távoli betöltés</target>
+</trans-unit>
+<trans-unit id="sad33f8293bf98049">
+  <source>Add Person</source>
+  <target>Új személy</target>
+</trans-unit>
+<trans-unit id="sdcedb1272e7ec098">
+  <source>Page Headers</source>
+  <target>Oldal-fejlécek</target>
+</trans-unit>
+<trans-unit id="s83b62e9afb60ad42">
+  <source>Simple header CLICK HOME to Navigate Back</source>
+  <target>Egyszerű fejléc kattints a Haza gombra, hogy visszamenjen az előző oldalra</target>
+</trans-unit>
 <trans-unit id="s2ec6be1b6544c74f">
   <source>People Re-loaded</source>
   <target>Személyek adatai betöltve</target>
 </trans-unit>
-<trans-unit id="sd693c658a20e3abd">
-  <source>persons found</source>
-  <target>személy adatait találtuk meg</target>
+<trans-unit id="sd976e241583c9b5f">
+  <source><ph id="0">${detail.numberOfPeopleLoaded}</ph> persons found</source>
+  <target>Felleltünk <ph id="0">${detail.numberOfPeopleLoaded}</ph> személyt</target>
 </trans-unit>
 <trans-unit id="sc7e09db45da69138">
   <source>New Person Added</source>
   <target>Új Személy Felvéve</target>
 </trans-unit>
-<trans-unit id="s235de2fdfd542145">
-  <source>added</source>
-  <target>felvéve</target>
+<trans-unit id="sfc42e89b6c6ddc37">
+  <source><ph id="0">${detail.person.firstName}</ph> added</source>
+  <target><ph id="0">${detail.person.firstName}</ph>-t felvettük</target>
+</trans-unit>
+<trans-unit id="email-address">
+  <note>Email Address of the Person</note>
+  <source>Handle</source>
+  <target>Drótposta</target>
+</trans-unit>
+<trans-unit id="first-name">
+  <note>First Name of the Person</note>
+  <source>First</source>
+  <target>Keresztnév</target>
+</trans-unit>
+<trans-unit id="home-button">
+  <note>Home button</note>
+  <source>Home</source>
+  <target>Haza</target>
+</trans-unit>
+<trans-unit id="last-name">
+  <note>Last Name of the Person</note>
+  <source>Last</source>
+  <target>Vezetéknév</target>
 </trans-unit>
 </body>
 </file>

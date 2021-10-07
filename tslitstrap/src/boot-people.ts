@@ -1,8 +1,10 @@
 import {html, TemplateResult, } from "lit"
 import {customElement, } from "lit/decorators.js"
+import {msg, localized} from "@lit/localize"
 import {MobxReactionUpdate} from "@adobe/lit-mobx"
 import {BootBase, appStore} from "./boot-base"
 
+@localized()
 @customElement("boot-people")
 class BootPeople extends MobxReactionUpdate(BootBase) {
   override connectedCallback():void {
@@ -18,9 +20,9 @@ class BootPeople extends MobxReactionUpdate(BootBase) {
       <thead>
         <tr>
           <th scope="col">#</th>
-          <th scope="col">First</th>
-          <th scope="col">Last</th>
-          <th scope="col">Handle</th>
+          <th scope="col">${msg(`First`,{desc:`First Name of the Person`,id:"first-name"})}</th>
+          <th scope="col">${msg(`Last`,{desc:`Last Name of the Person`,id:"last-name"})}</th>
+          <th scope="col">${msg(`Handle`,{desc:`Email Address of the Person`,id:"email-address"})}</th>
         </tr>
       </thead>
       <tbody>

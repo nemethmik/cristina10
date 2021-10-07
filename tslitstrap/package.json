@@ -7,7 +7,7 @@
     "serve": "vite preview",
     "fix":"eslint src --fix",
     "servor": "npx servor dist index.html 8080 --browse --reload",
-    "loc1extract":"npx lit-localize extract",
+    "loc1extract":"lit-localize extract",
     "loc2generate":"lit-localize build"
   },
   "devDependencies": {

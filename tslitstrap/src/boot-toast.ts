@@ -1,8 +1,10 @@
 import {Toast} from "bootstrap"
 import {html, TemplateResult} from "lit"
 import {customElement,property, query} from "lit/decorators.js"
+import {msg, localized} from "@lit/localize"
 import {BootBase} from "./boot-base"
 
+@localized()
 @customElement("boot-toast")
 export class BootToast extends BootBase {
     @property() small = "" 
@@ -23,7 +25,7 @@ export class BootToast extends BootBase {
             <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="toast-header">
                     <!-- img src={logo} width=30 class="rounded me-2" alt="logo" -->
-                    <strong class="me-auto"><i class="bi bi-stars"></i>Bootstrap Toast</strong>
+                    <strong class="me-auto"><i class="bi bi-stars"></i>${msg(`Bootstrap Toast`)}</strong>
                     <small>${this.small}</small>
                     <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
                 </div>

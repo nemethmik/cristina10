@@ -1,6 +1,6 @@
 import {html, TemplateResult, } from "lit"
 import {customElement, query} from "lit/decorators.js"
-import {msg, localized,configureLocalization} from "@lit/localize"
+import {msg, localized,configureLocalization, str} from "@lit/localize"
 import {MobxReactionUpdate} from "@adobe/lit-mobx"
 import {BootBase,appStore,TPeopleEvent,TPeopleActions} from "./boot-base"
 import "./page-people"
@@ -34,11 +34,11 @@ class BootApp extends MobxReactionUpdate(BootBase) {
     this.addEventListener(TPeopleEvent,((e:CustomEvent):void => {
       const detail = e.detail as TPeopleActions
       switch(detail.type) {
-        case "Load": this.toast.show(msg(`People Re-loaded`),`${detail.numberOfPeopleLoaded} ${msg(`persons found`)}`); break
-        case "Add": this.toast.show(msg(`New Person Added`),`${detail.person.firstName} ${msg(`added`)}`); break
+        case "Load": this.toast.show(msg(`People Re-loaded`),msg(str`${detail.numberOfPeopleLoaded} persons found`)); break
+        case "Add": this.toast.show(msg(`New Person Added`),msg(str`${detail.person.firstName} added`)); break
       }
     }) as EventListener)
-    this.setLocale("fr_FR")
+    this.setLocale("hu-HU")
     super.connectedCallback()
   }
   @query("boot-toast") toast!:BootToast

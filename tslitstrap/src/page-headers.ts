@@ -1,8 +1,10 @@
 import {html, css, TemplateResult} from "lit"
 import {customElement,query} from "lit/decorators.js"
 import {ref,createRef} from "lit/directives/ref.js"
+import {msg, localized} from "@lit/localize"
 import {BootBase,appStore,dispatchPeopleEvent} from "./boot-base"
 
+@localized()
 @customElement("page-headers")
 export class PageHeaders extends BootBase {
     static styles = [...BootBase.styles, css`
@@ -79,12 +81,12 @@ export class PageHeaders extends BootBase {
     <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
       <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
         <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
-        <span class="fs-4">Simple header CLICK HOME to Navigate Back</span>
+        <span class="fs-4">${msg(`Simple header CLICK HOME to Navigate Back`)}</span>
       </a>
 
       <ul class="nav nav-pills">
         <li class="nav-item"><a href="#" class="nav-link active" aria-current="page"
-            @click=${():void=>{appStore.setPage("People")}} >Home</a></li>
+            @click=${():void=>{appStore.setPage("People")}}>${msg("Home",{desc:"Home button",id:"home-button"})}</a></li>
         <li class="nav-item"><a href="#" class="nav-link">Features</a></li>
         <li class="nav-item"><a href="#" class="nav-link">Pricing</a></li>
         <li class="nav-item"><a href="#" class="nav-link">FAQs</a></li>

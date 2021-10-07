@@ -135,6 +135,8 @@ The extreme complexity of styling Shadow DOM s because of its strict encapsulati
   - [Forget about the sample is available in Lit Playground](https://lit.dev/playground/#sample=docs/libraries/localization/runtime), check out the [localize/examples](https://github.com/lit/lit/tree/main/packages/localize/examples) provided in the GitHub repo of Lit.
   - Here are the steps to do:
     - In the source code use msg() function to sandwitch all string literals to be localized as explained in the sections [Making Templates Localizable](https://lit.dev/docs/libraries/localization/#making-templates-localizable), [Message Descriptions for Translators](https://lit.dev/docs/libraries/localization/#message-descriptions) and [Message Placeholders](https://lit.dev/docs/libraries/localization/#message-placeholders)
+      - The section on place holders is totally wrong, the correct format is:
+      **msg(str`${detail.person.firstName} added`)** where str is tagged literal function from the localize package. When you receive this error message `error TS2324: String literal with expressions must use the str tag` when running the *extract* command, then use this *str*.
     - Make a **lit-localize.json** according to the [example](https://github.com/lit/lit/blob/main/packages/localize/examples/runtime-ts/lit-localize.json). Here is my version using the [runtime](https://lit.dev/docs/libraries/localization/#runtime-mode) mode adopted from the example:
     ```json
     {
@@ -165,7 +167,12 @@ The extreme complexity of styling Shadow DOM s because of its strict encapsulati
         <source>People Re-loaded</source>
         <target>Személyek adatai betöltve</target>
       </trans-unit>
+      <trans-unit id="sd976e241583c9b5f">
+        <source><ph id="0">${detail.numberOfPeopleLoaded}</ph> persons found</source>
+        <target>Felleltünk <ph id="0">${detail.numberOfPeopleLoaded}</ph> személyt</target>
+      </trans-unit>
       ``` 
+      In the literals with **placeholders** don't touch `<ph id="0">${detail.numberOfPeopleLoaded}</ph>` otherwise you will have `Placeholder error in hu-HU localization of ...`
   - Generate translator TypeScript modules with **npx lit-localize build**, which will generate ts files from the *xlf* files. These files will be dynamically imported when needed:
     ```ts
     import {sourceLocale, targetLocales} from "./loc/locale-codes" 
@@ -192,6 +199,11 @@ The extreme complexity of styling Shadow DOM s because of its strict encapsulati
     Here I created a convenience *TLocales* type definition from the target locales string array.
     This type then is used in a convenience *async setLocale* member function, which is calling the
     setLocale function available in the localization configuration obbject from *configureLocalization*
+  - Whenever you add new *msg* localizable messages/texts you should **npm run loc1extract**, translate the texts in the *xlf* files and then and **run npm loc2generate**
+  ```json
+    "loc1extract":"lit-localize extract",
+    "loc2generate":"lit-localize build"
+  ```
 
 ## jobwatch
 Online version is available on [Azure](https://white-beach-0d4819403.azurestaticapps.net/)
