@@ -100,8 +100,8 @@ The extreme complexity of styling Shadow DOM s because of its strict encapsulati
   - The same guy made a WebPack loader, too: [lit-css-loader](https://github.com/bennypowers/lit-css/tree/main/packages/lit-css-loader)
 - The [Bootstrap starter template](https://github.com/twbs/bootstrap-npm-starter) on GitHub uses Bootstrap V4 and is configured with its own build toolset.
 - Installing Bootstrap and Lit:
-  - **npm i bootstrap bootstrap-icons @popperjs/core lit mobx @adobe/lit-mobx @lit-labs/task**
-  - **npm i -D @types/bootstrap rollup-plugin-lit-css eslint copyfiles**
+  - **npm i bootstrap bootstrap-icons @popperjs/core lit mobx @adobe/lit-mobx @lit/localize**
+  - **npm i -D @types/bootstrap rollup-plugin-lit-css eslint copyfiles @lit/localize-tools**
   - **import bootstrap from "bootstrap"** is when you want to use toast, see the ksenia25 videos
   - I have already experimented with Bootstrap in [ksenia25](https://github.com/nemethmik/ksenia25) where I was experimenting with WebPack5 and I recorded a number of accompanying videos.
 - The Bootrap documentation describing webpack setup explains that [you may use Bootstrap’s ready-to-use CSS by simply adding this line to your project’s entry point](https://getbootstrap.com/docs/5.0/getting-started/webpack/#importing-compiled-css) **import "bootstrap/dist/css/bootstrap.min.css"**
@@ -131,6 +131,67 @@ The extreme complexity of styling Shadow DOM s because of its strict encapsulati
     static styles = [bootstrapstyles as CSSResultOrNative]
     ```
 - [npm i @lit-labs/task](https://github.com/lit/lit/blob/main/packages/labs/task/src/task.ts) is really light-weight task controller for executing long running async calls. It shows similarities React's useEffect. It can be installed as an [NPM package](https://www.npmjs.com/package/@lit-labs/task).
+- [Lit Locatlization](https://lit.dev/docs/libraries/localization/)
+  - [Forget about the sample is available in Lit Playground](https://lit.dev/playground/#sample=docs/libraries/localization/runtime), check out the [localize/examples](https://github.com/lit/lit/tree/main/packages/localize/examples) provided in the GitHub repo of Lit.
+  - Here are the steps to do:
+    - In the source code use msg() function to sandwitch all string literals to be localized as explained in the sections [Making Templates Localizable](https://lit.dev/docs/libraries/localization/#making-templates-localizable), [Message Descriptions for Translators](https://lit.dev/docs/libraries/localization/#message-descriptions) and [Message Placeholders](https://lit.dev/docs/libraries/localization/#message-placeholders)
+    - Make a **lit-localize.json** according to the [example](https://github.com/lit/lit/blob/main/packages/localize/examples/runtime-ts/lit-localize.json). Here is my version using the [runtime](https://lit.dev/docs/libraries/localization/#runtime-mode) mode adopted from the example:
+    ```json
+    {
+        "$schema": "https://raw.githubusercontent.com/lit/lit/main/packages/localize-tools/config.schema.json",
+        "sourceLocale": "en",
+        "targetLocales": ["hu-HU", "fr_FR"],
+        "tsConfig": "./tsconfig.json",
+        "output": {
+            "mode": "runtime",
+            "outputDir": "src/loc",
+            "localeCodesModule": "src/loc/locale-codes.ts"
+        },
+        "interchange": {
+          "format": "xliff",
+          "xliffDir": "xliff"
+        }
+    }    
+    ``` 
+    - *outputDir* is the directory where *lit-localize build* is going to generate the TypeScript files from the *xlf* files previously generated with *lit-localize extract*
+    - *localeCodesModule* is the name of the optional convenience file *lit-localize build* generates based on the settings in *lit-localize.json*  
+    - *xliffDir* is where *lit-localize extract* is going to generate the *xlf* files containing the string literals to be translated for each locaes defined in the *targetLocales* list.
+    - The *transform* mode would be an overkill for mobile applications with limited amount of translatable scripts, usually fewer than a couple of thousands. 
+  - After having *lit-localize.json* in place, run **npx lit-localize extract**, which will generate *xlf* files for each target locales containing the default English texts.
+  - Provide translations for the texts in the xlf files by adding `<target>` elements keeping the generated `<source>` elemnts untouched.
+    - If you receice the error `hu-HU message s2ec6be1b6544c74f is missing, using canonical text as fallback`, then you probably replaced the texts in the `<source>` elemnts instead of adding `<target>`. This is an example how an xlf translation should look like:
+      ```xml
+      <trans-unit id="s2ec6be1b6544c74f">
+        <source>People Re-loaded</source>
+        <target>Személyek adatai betöltve</target>
+      </trans-unit>
+      ``` 
+  - Generate translator TypeScript modules with **npx lit-localize build**, which will generate ts files from the *xlf* files. These files will be dynamically imported when needed:
+    ```ts
+    import {sourceLocale, targetLocales} from "./loc/locale-codes" 
+    type TLocales = typeof targetLocales[number]
+
+    @localized()
+    @customElement("boot-app")
+    class BootApp extends MobxReactionUpdate(BootBase) {
+      private _localeConfig = configureLocalization({
+        sourceLocale,
+        targetLocales,
+        //loadLocale: (locale: string) => import(`./loc/${locale}`), // For development with npm run dev
+        loadLocale: (locale: string) => import(`./loc/${locale}.js`), // For npm run build
+      })  
+      async setLocale(loc:TLocales):Promise<void> {await this._localeConfig.setLocale(loc)}
+      override connectedCallback():void {
+        ...
+        this.setLocale("hu-HU")
+        super.connectedCallback()
+      }
+      ...
+    }
+    ```
+    Here I created a convenience *TLocales* type definition from the target locales string array.
+    This type then is used in a convenience *async setLocale* member function, which is calling the
+    setLocale function available in the localization configuration obbject from *configureLocalization*
 
 ## jobwatch
 Online version is available on [Azure](https://white-beach-0d4819403.azurestaticapps.net/)

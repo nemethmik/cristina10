@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+<file target-language="hu-HU" source-language="en" original="lit-localize-inputs" datatype="plaintext">
+<body>
+<trans-unit id="s2ec6be1b6544c74f">
+  <source>People Re-loaded</source>
+  <target>Személyek adatai betöltve</target>
+</trans-unit>
+<trans-unit id="sd693c658a20e3abd">
+  <source>persons found</source>
+  <target>személy adatait találtuk meg</target>
+</trans-unit>
+<trans-unit id="sc7e09db45da69138">
+  <source>New Person Added</source>
+  <target>Új Személy Felvéve</target>
+</trans-unit>
+<trans-unit id="s235de2fdfd542145">
+  <source>added</source>
+  <target>felvéve</target>
+</trans-unit>
+</body>
+</file>
+</xliff>

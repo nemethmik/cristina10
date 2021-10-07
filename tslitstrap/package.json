@@ -4,9 +4,14 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build && copyfiles people.json dist",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "fix":"eslint src --fix",
+    "servor": "npx servor dist index.html 8080 --browse --reload",
+    "loc1extract":"npx lit-localize extract",
+    "loc2generate":"lit-localize build"
   },
   "devDependencies": {
+    "@lit/localize-tools": "^0.3.7",
     "@types/bootstrap": "^5.1.6",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
@@ -19,6 +24,7 @@
   "dependencies": {
     "@adobe/lit-mobx": "^2.0.0-rc.4",
     "@lit-labs/task": "^1.0.0",
+    "@lit/localize": "^0.10.4",
     "@popperjs/core": "^2.10.2",
     "bootstrap": "^5.1.1",
     "bootstrap-icons": "^1.5.0",
