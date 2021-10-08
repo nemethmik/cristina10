@@ -15,6 +15,12 @@ class PagePeople extends BootBase {
   @query("boot-addperson") addPerson!:BootAddPerson
   override render():TemplateResult { return html`
     <h1>${msg(`Hello BootStrap in Shadow DOM!`)}</h1>
+    <div class="form-check form-switch form-check-inline">
+      <input ?checked=${appStore.locale == "en"} class="form-check-input" @change=${(e:Event):void => {
+        appStore.setLocale((e.target as HTMLInputElement).checked ? "en" : "hu-HU")
+      }} type="checkbox" role="switch">
+      <label class="form-check-label">${msg(`English`)}</label>
+    </div>
     <button type="button" class="btn btn-primary"  
         @click=${():void => {appStore.loadData(true,this)}}>${msg(`Load Remote Data`)}</button>
     <button type="button" class="btn btn-primary"  

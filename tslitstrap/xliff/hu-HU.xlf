@@ -30,6 +30,14 @@
   <source>Cancel</source>
   <target>Mégsem</target>
 </trans-unit>
+<trans-unit id="s6c1259d08680ee12">
+  <source>Number of people <ph id="0">${appStore.numberOfPeople}</ph></source>
+  <target>Személyek száma <ph id="0">${appStore.numberOfPeople}</ph></target>
+</trans-unit>
+<trans-unit id="sb59d68ed12d46377">
+  <source>Loading</source>
+  <target>Betöltés</target>
+</trans-unit>
 <trans-unit id="safa3c1b669827492">
   <source>Bootstrap Toast</source>
   <target>Üzenetpanel</target>

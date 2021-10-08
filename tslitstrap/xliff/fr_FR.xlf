@@ -23,6 +23,12 @@
 <trans-unit id="s2ceb11be2290bb1b">
   <source>Cancel</source>
 </trans-unit>
+<trans-unit id="s6c1259d08680ee12">
+  <source>Number of people <ph id="0">${appStore.numberOfPeople}</ph></source>
+</trans-unit>
+<trans-unit id="sb59d68ed12d46377">
+  <source>Loading</source>
+</trans-unit>
 <trans-unit id="safa3c1b669827492">
   <source>Bootstrap Toast</source>
 </trans-unit>

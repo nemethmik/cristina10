@@ -1,6 +1,6 @@
 import {html, TemplateResult, } from "lit"
 import {customElement, } from "lit/decorators.js"
-import {msg, localized} from "@lit/localize"
+import {msg, str, localized} from "@lit/localize"
 import {MobxReactionUpdate} from "@adobe/lit-mobx"
 import {BootBase, appStore} from "./boot-base"
 
@@ -37,9 +37,9 @@ class BootPeople extends MobxReactionUpdate(BootBase) {
       </tbody>
     </table>
     <p>
-      ${appStore.numberOfPeople ? html`<h2>Number of people ${appStore.numberOfPeople}</h2>` : html`
+      ${appStore.numberOfPeople ? html`<h2>${msg(str`Number of people ${appStore.numberOfPeople}`)}</h2>` : html`
         <div class="spinner-grow text-primary" role="status">
-          <span class="visually-hidden">Loading...</span>
+          <span class="visually-hidden">${msg(`Loading`)}...</span>
         </div>
       `}
     </p>
