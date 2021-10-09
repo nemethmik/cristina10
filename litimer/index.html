@@ -6,12 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite + Lit App</title>
     <script type="module" src="/src/my-element.ts"></script>
+    <script type="module" src="/src/my-timer.ts"></script>
   </head>
   <body>
     <my-element name=Vite count=10>
       <p>This is child content</p>
       <p slot=before>Here comes the counter button</p>
       <p>Another default slot content</p>
+      <p><my-timer run></my-timer></p>
     </my-element>
+    
   </body>
 </html>

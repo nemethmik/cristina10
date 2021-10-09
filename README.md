@@ -18,10 +18,15 @@ This project comes with a series of explanation and demonstration videos.
 - Watch [Web Components Getting Started - 01 Creating a Web Component Project with Vite in One Minute](https://youtu.be/K--v5yrzhjg)
 
 ### Part 2: The Anatomy of a Web Component: Counter
+Watch [Web Components Getting Started - 02 The Anatomy of a Web Component: Counter](https://youtu.be/cF1KJ5AhwG0)
 
 ### Part 3: Crafting a not so Simple Web Component from Scratch in 5 minutes 
+- Watch [Web Components Getting Started - 03 Crafting a Web Component from Scratch: Timer (Part 1 - Hanging)](https://youtu.be/Tuk3xY293Xk)
+- At the end of the video the web browser hanged, because of a mistake which I made. If you watched carefully my video, and you followed the code, your application was hanging, too; unless you recognized right away the error I made. So, in the next video, I'll explain the error and I'll correct it.
+  
 
 ### Part 4: The Anatomy of a Web Component: Timer
+- Watch [Web Components Getting Started - 04 Anatomy of Another Web Component - Timer](https://youtu.be/va_7ugV4vjk) the explanation of the error I had made in the previous video.
 - As explained in [Iterators and Generators](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Iterators_and_Generators)
 the function* syntax is a syntax sugar to create iterator objects where the *yield* expression emits a value for the *next* call. 
 In my example the Lit directive *asyncReplace* works with the iterator/generator:

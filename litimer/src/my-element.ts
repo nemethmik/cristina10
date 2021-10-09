@@ -1,11 +1,7 @@
 import { html, css, LitElement,TemplateResult } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
-/**
- * An example element.
- *
- * @slot - This element has a slot
- * @csspart button - The button
- */
+//import "./my-timer"
+
 @customElement('my-element')
 export class MyElement extends LitElement { //HTMLElement
   static styles = css`
@@ -19,7 +15,6 @@ export class MyElement extends LitElement { //HTMLElement
   @property() name = 'World'
   @property({ type: Number }) count = 0
   override render():TemplateResult {
-    //super.render()
     return html`
       <h1>Hello, ${this.name}!</h1>
       <slot name=before>Default Impl of Slot named before</slot>
@@ -29,13 +24,8 @@ export class MyElement extends LitElement { //HTMLElement
       <slot></slot>
     `
   }
-  // private _onClick(e:Event) {
-  //   console.log("onClick",e)
-  //   this.count++
-  // }
-
   foo(): string {
     return 'foo'
   }
 }
-//declare global {interface HTMLElementTagNameMap {'my-element': MyElement}}
+declare global {interface HTMLElementTagNameMap {'my-element': MyElement}}
