@@ -15,6 +15,7 @@ This project comes with a series of explanation and demonstration videos.
 - npm i
 - npm run dev
 - Before *npm run build* delete/rename *vite.config.ts*, since it will force the project to build a library package instead of a regular standalone deployable web application.
+- Watch [Web Components Getting Started - 01 Creating a Web Component Project with Vite in One Minute](https://youtu.be/K--v5yrzhjg)
 
 ### Part 2: The Anatomy of a Web Component: Counter
 
