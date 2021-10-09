@@ -1,6 +1,92 @@
 # cristina10
 A multi-project repo for TypeScript web server, front-end and database applications (Chirichella)
 
+## litclock/litimer
+
+is an application to show some of the interesting and important aspects of web component development with typescript including: 
+- Creating a new web project in seconds with the fantastic Vite using its Lit template in seconds.
+- Making a not so trivial Timer web component with Lit and JavaScript iterator/generator function.
+- Embedding a web component into the slots of the shadow DOM of another web component.
+
+This project comes with a series of explanation and demonstration videos.
+### Part 1: Creating a web component project with Vite in a minute.
+- *npm init vite* with project name *litimer*
+- cd litimer
+- npm i
+- npm run dev
+- Before *npm run build* delete/rename *vite.config.ts*, since it will force the project to build a library package instead of a regular standalone deployable web application.
+
+### Part 2: The Anatomy of a Web Component: Counter
+
+### Part 3: Crafting a not so Simple Web Component from Scratch in 5 minutes 
+
+### Part 4: The Anatomy of a Web Component: Timer
+- As explained in [Iterators and Generators](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Iterators_and_Generators)
+the function* syntax is a syntax sugar to create iterator objects where the *yield* expression emits a value for the *next* call. 
+In my example the Lit directive *asyncReplace* works with the iterator/generator:
+*html`<slot>My Timer:</slot><span>${asyncReplace(this.timer)}</span> <slot name=after></slot>`*
+- The anatomy of the Timer web component:
+```ts
+@customElement('my-timer')
+class MyTimer extends LitElement {
+  @property({type:Boolean}) run = false
+  async *countUp() {
+    const start = Date.now()
+    while (this.run) {
+      const now = Date.now()
+      yield now - start
+      await new Promise((r) => setTimeout(r, 100))
+    }
+  }
+  override attributeChangedCallback(name:string,old:string,value:string){
+    super.attributeChangedCallback(name,old,value)
+    if(this.run) this.timer = this.countUp()
+  }
+  @state() private timer = this.countUp()
+  render() {
+    return html`<slot>My Timer:</slot><span>${asyncReplace(this.timer)}</span><slot name=after></slot>`
+  }
+}
+declare global { interface HTMLElementTagNameMap {'my-timer': MyTimer}}
+```
+  - *@customElement* decorator will automatically call *window.cusomElements.define* needed to register a web component.
+  - *run* attribute is a tool for the outside world to start and stop the timer.
+  - `async *countUp()` is the infinite looping ticking engine (an iterator generator method) to *yield* a value ten times a second. The value emitted is in milliseconds.
+  The engine stops, when the *run* attribute is changed to false. Techically `*countUp` returns an iterator object from which to get the values yielded. This iterator object is kept in the *this.timer* member.
+  - `attributeChangedCallback` is a standard browser-provided callback function for custom elements when an attribute is changed. LitElement is just a thin but brutally convenient layer to make custom element development a fun and joy. When the run property is changed, another generator instance (this.timer) is generated and the *countUp* pumping engine is restarted.
+  - `@state() private timer = this.countUp()` is the actual generator object to get the next values from. 
+  - **html` ...`** *tagged template literal function* is the heart of *Lit* technology providing a diffing engine to make reactive rendering possible
+  - `<slot>My Timer:</slot>` is a customizable label for the component. Slots can be replaced when the component is used on the web page like so
+    `<my-timer run><b>The Job is Running for:</b></my-timer>`
+  - The directice *asyncReplace* in `${asyncReplace(this.timer)}` is a brutally powerful function from the Lit toolset `import {asyncReplace} from "lit/directives/async-replace.js"` to work with *async iterator generators* by reading the next values yielded by the iterator object *this.timer* in our case here created with a generator function. 
+  - `<slot name=after></slot>` is a named slot to make customizing the display of the web component more flexible. slots and shadow DOM are provided by the browser.
+
+### Part 5: Almost Everything You should Know About Slots and Shadow DOM
+```ts
+  querySlotElementAll(slot:string,name:string):[HTMLElement | null]  {
+    const slotElement = this.shadowRoot?.querySelector(slot ? `slot[name=${slot}]` : `slot`) as HTMLSlotElement
+    const slotChildren = slotElement.assignedElements()
+    const selectedElements = slotChildren?.map((e) => e.nodeName == name.toUpperCase() ? [e] : Array.from(e.querySelectorAll(name)))       
+    return selectedElements.reduce((acc, val) => acc.concat(val), []) as [HTMLElement | null]
+  }
+  ...
+  <button @click=${async () => {
+    const clocks = this.querySlotElementAll("","my-timer")
+    clocks?.forEach((c) => this.run ? c?.removeAttribute("run") : c?.setAttribute("run","true"))
+    this.run = !this.run
+    await new Promise((r) => setTimeout(r, 1)) // Add a chance to browser to update the screen before popping up alert
+    // Alert will put all timers on halt while the alert is on
+    window.alert(`${clocks.length} timers have been ${this.run ? `started` : `stopped` }`)
+  }}>${this.run ? `Stop` : `Start`}</button>
+```
+Slots can be named and even a web component can be sandwitched into another instance of the same class:
+```html
+  <my-timer run>
+    <span>Embedding timer:</span> 
+    <my-timer slot=after run>Embedded timer:</my-timer>
+  </my-timer>
+```
+
 ## tslitstrap
 
 On-line sample on Azure [white-pond](https://white-pond-01b194d03.azurestaticapps.net/)
