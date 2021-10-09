@@ -13,7 +13,7 @@
       <p>This is child content</p>
       <p slot=before>Here comes the counter button</p>
       <p>Another default slot content</p>
-      <p><my-timer run></my-timer></p>
+      <p><my-timer run><span slot="after"> millis</span><b>A timer ==></b> <my-timer run slot=after>Another timer:</my-timer> </my-timer></p>
     </my-element>
     
   </body>

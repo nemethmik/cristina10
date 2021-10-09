@@ -1,5 +1,5 @@
 import { html, css, LitElement,TemplateResult } from 'lit'
-import { customElement, property } from 'lit/decorators.js'
+import { customElement, property, query, state } from 'lit/decorators.js'
 //import "./my-timer"
 
 @customElement('my-element')
@@ -14,6 +14,8 @@ export class MyElement extends LitElement { //HTMLElement
   `
   @property() name = 'World'
   @property({ type: Number }) count = 0
+  @query("my-timer") myTimer!:HTMLElement
+  @state() runTimer = true
   override render():TemplateResult {
     return html`
       <h1>Hello, ${this.name}!</h1>
@@ -21,6 +23,10 @@ export class MyElement extends LitElement { //HTMLElement
       <button @click=${()=>this.count++ /*this._onClick*/} part="button">
         Click Count: ${this.count}
       </button>
+      <button @click=${()=>this.runTimer = !this.runTimer}>
+        ${this.runTimer ? `Stop` : `Run`}
+      </button>
+      <my-timer ?run=${this.runTimer}></my-timer>
       <slot></slot>
     `
   }

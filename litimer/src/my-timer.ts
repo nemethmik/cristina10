@@ -13,10 +13,14 @@ class MyTimer extends LitElement {
             await new Promise(r => setTimeout(r,100))
         }        
     }
+    override attributeChangedCallback(name:string,old:string,value:string) {
+        super.attributeChangedCallback(name,old,value)
+        if(this.run) this.timer = this.countUp()
+    }
     @state() private timer = this.countUp()
     override render():TemplateResult {
         return html`
-            My Timer: <span>${asyncReplace(this.timer)}</span>
+            <slot>Timer:</slot><span>${asyncReplace(this.timer)}</span><slot name=after></slot>
         `
     } 
 }
