@@ -69,6 +69,7 @@ declare global { interface HTMLElementTagNameMap {'my-timer': MyTimer}}
 
 ### Part 5: Almost Everything You should Know About Slots and Shadow DOM
 - Watch [Web Components Getting Started - 05 Controlling Elements from within a Web Component](https://youtu.be/ejLHZR8IEqQ) to see how to stop and restart the timer component.
+- And finally [Web Components Getting Started - 06 Almost Everything You Should Know About Shadow DOM and Slots](https://youtu.be/JkGMbhEPnlo)
 ```ts
   querySlotElementAll(slot:string,name:string):[HTMLElement | null]  {
     const slotElement = this.shadowRoot?.querySelector(slot ? `slot[name=${slot}]` : `slot`) as HTMLSlotElement
