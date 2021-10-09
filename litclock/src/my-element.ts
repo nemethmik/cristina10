@@ -1,5 +1,5 @@
 import { html, css, LitElement } from 'lit'
-import { customElement, property, state } from 'lit/decorators.js'
+import { customElement, property, state, queryAssignedNodes } from 'lit/decorators.js'
 import "./my-timer" // Custom elements are import this way
 
 @customElement('my-element')
@@ -13,18 +13,19 @@ export class MyElement extends LitElement {
     }
   `
   @property() name = 'World'
+  @queryAssignedNodes("") defaultSlotNodes!:NodeListOf<HTMLElement>
   /**
    * Queries all the slotted elements from the shadow DOM of this (custom) element.
    * This method function is best placed in a base/parent/framework custom element class.
-   * @param slot The name of the slot, empty string for default slot
+   * @param slotNodes The list of nodes provided by a @queryAssignedNodes() member
    * @param name the element tag name (div, my-timer, for example) 
    * @returns All the HTMLElements in an array
    */
-  querySlotElementAll(slot:string,name:string):[HTMLElement | null]  {
-    const slotElement = this.shadowRoot?.querySelector(slot ? `slot[name=${slot}]` : `slot`) as HTMLSlotElement
+  querySlotElementAll(slotNodes:NodeListOf<HTMLElement>,name:string):[HTMLElement | null]  {
+    //const slotElement = this.shadowRoot?.querySelector(slot ? `slot[name=${slot}]` : `slot`) as HTMLSlotElement
     //console.log("slotElement", slotElement)
     //console.log("slotelementQuery",this.shadowRoot?.querySelectorAll(name)) //This returns nothing
-    const slotChildren = slotElement.assignedElements()
+    const slotChildren = Array.from(slotNodes).filter(e=>e.querySelectorAll) //slotElement.assignedElements()
     //console.log("slotChildren", slotChildren)
     //If the element directly in the slotChildren array, e.querySelectorAll(name) will not find it
     //Even if the element has its own Shadow DOM e.querySelectorAll(name) will be able to find those deeply embedded elements, too.
@@ -42,7 +43,8 @@ export class MyElement extends LitElement {
         Click Count: ${this.count}
       </button>
       <button @click=${async () => {
-        const timers = this.querySlotElementAll("","my-timer")
+        //console.log(Array.from(this.defaultSlotNodes).filter(e=>e.querySelectorAll)) 
+        const timers = this.querySlotElementAll(this.defaultSlotNodes,"my-timer")
         //console.log(clocks, this.run)
         timers?.forEach((c) => this.run ? c?.removeAttribute("run") : c?.setAttribute("run","true"))
         this.run = !this.run

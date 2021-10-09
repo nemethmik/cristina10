@@ -77,6 +77,14 @@ declare global { interface HTMLElementTagNameMap {'my-timer': MyTimer}}
     return selectedElements.reduce((acc, val) => acc.concat(val), []) as [HTMLElement | null]
   }
   ...
+  //Or, here is an alternative using @queryAssignedNodes decorated members
+  @queryAssignedNodes("") defaultSlotNodes!:NodeListOf<HTMLElement>
+  querySlotElementAll(slotNodes:NodeListOf<HTMLElement>,name:string):[HTMLElement | null]  {
+    const slotChildren = Array.from(slotNodes).filter(e=>e.querySelectorAll)
+    const selectedElements = slotChildren?.map((e) => e.nodeName == name.toUpperCase() ? [e] : Array.from(e.querySelectorAll(name)))       
+    return selectedElements.reduce((acc, val) => acc.concat(val), []) as [HTMLElement | null]
+  }
+  ...
   <button @click=${async () => {
     const clocks = this.querySlotElementAll("","my-timer")
     clocks?.forEach((c) => this.run ? c?.removeAttribute("run") : c?.setAttribute("run","true"))
