@@ -2,32 +2,21 @@ import {html, LitElement, TemplateResult} from "lit"
 import {customElement, state} from "lit/decorators.js"
 import {asyncReplace} from "lit/directives/async-replace.js"
 import {makeAutoObservable,reaction,autorun} from "mobx"
-import {MobxReactionUpdate} from "@adobe/lit-mobx"
-// export const TTimerEvent = "timer"
-// export type TTimerActions = 
-//     {type: "Connected"} 
-//   | {type: "Disconnected"} 
-// function dispatchTimerEvent(el:HTMLElement,detail:TTimerActions):void {
-//     el.dispatchEvent(new CustomEvent(TTimerEvent,{detail,composed:true,bubbles:true,cancelable:false}))
-// }
 
 class TimerController {
     private _run = true
     get run():boolean {return this._run}
-    constructor() {
-        makeAutoObservable(this)
-    }
+    constructor() {makeAutoObservable(this)}
     start():void {this._run = true}
     stop():void {this._run = false}
 }
 export const timerController = new TimerController()
 
 @customElement("my-timer")
-class MyTimer extends MobxReactionUpdate(LitElement) {
-    timerController = timerController
+class MyTimer extends LitElement { 
     async *countUp() {
         const start = Date.now()
-        while(timerController.run) {
+        while(timerController.run) { //timerController.run) {
             const now = Date.now()
             yield now - start
             await new Promise(r => setTimeout(r,100))

@@ -1,11 +1,12 @@
 import { html, css, LitElement,TemplateResult } from 'lit'
 import { customElement, property, } from 'lit/decorators.js'
+// npm install mobx @adobe/lit-mobx 
 import {MobxReactionUpdate} from "@adobe/lit-mobx"
 import "./my-timer" 
 import {timerController} from "./my-timer" 
 
 @customElement('my-element')
-export class MyElement extends MobxReactionUpdate(LitElement) { //HTMLElement
+export class MyElement extends MobxReactionUpdate(LitElement) {
   static styles = css`
     :host {
       display: block;
@@ -20,15 +21,22 @@ export class MyElement extends MobxReactionUpdate(LitElement) { //HTMLElement
     return html`
       <h1>Hello, ${this.name}!</h1>
       <slot name=before>Default Impl of Slot named before</slot>
-      <button @click=${()=>this.count++ /*this._onClick*/} part="button">
+      <button @click=${()=>this.count++} part="button">
         Click Count: ${this.count}
       </button>
-      <button @click=${()=> timerController.run ? timerController.stop() : timerController.start()}>
+      <button @click=${() => timerController.run ? timerController.stop() : timerController.start()}>
         ${timerController.run ? `Stop` : `Run`}
       </button>
-      <my-timer id=myelementimer1></my-timer>
+      <my-timer></my-timer>
       <slot></slot>
+      <my-timer></my-timer>
     `
   }
 }
 declare global {interface HTMLElementTagNameMap {'my-element': MyElement}}
+/*
+      <button @click=${()=> timerController.run ? timerController.stop() : timerController.start()}>
+        ${timerController.run ? `Stop` : `Run`}
+      </button>
+
+*/

@@ -67,7 +67,7 @@ declare global { interface HTMLElementTagNameMap {'my-timer': MyTimer}}
   - The directice *asyncReplace* in `${asyncReplace(this.timer)}` is a brutally powerful function from the Lit toolset `import {asyncReplace} from "lit/directives/async-replace.js"` to work with *async iterator generators* by reading the next values yielded by the iterator object *this.timer* in our case here created with a generator function. 
   - `<slot name=after></slot>` is a named slot to make customizing the display of the web component more flexible. slots and shadow DOM are provided by the browser.
 
-### Part 5: Almost Everything You should Know About Slots and Shadow DOM
+### Part 5 and 6: Almost Everything You should Know About Slots and Shadow DOM
 - Watch [Web Components Getting Started - 05 Controlling Elements from within a Web Component](https://youtu.be/ejLHZR8IEqQ) to see how to stop and restart the timer component.
 - And finally [Web Components Getting Started - 06 Almost Everything You Should Know About Shadow DOM and Slots](https://youtu.be/JkGMbhEPnlo)
 ```ts
@@ -102,6 +102,10 @@ Slots can be named and even a web component can be sandwitched into another inst
     <my-timer slot=after run>Embedded timer:</my-timer>
   </my-timer>
 ```
+
+### Part 7: Using MobX for Controlling Web Component Collaborations
+Full explanation in this video [ Web Components Getting Started - 7 MobX for Controlling Web Component Collaborations](https://youtu.be/-v7pl1wYiJU)
+
 ### Dispatching Registration Costom Events from the connectedCallback of Timers 
 Dispatching the event from *connectedCallback*  have to be done via the *updateCallback* Promise
 `this.updateComplete.then(()=>dispatchTimerEvent(this,{type:"Connected"}))` otherwise it will not work.
