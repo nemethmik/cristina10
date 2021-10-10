@@ -15,10 +15,12 @@
     "build": "tsc && vite build"
   },
   "dependencies": {
-    "lit": "^2.0.0"
+    "@adobe/lit-mobx": "^2.0.0-rc.4",
+    "lit": "^2.0.0",
+    "mobx": "^6.3.3"
   },
   "devDependencies": {
-    "vite": "^2.6.4",
-    "typescript": "^4.3.2"
+    "typescript": "^4.3.2",
+    "vite": "^2.6.4"
   }
 }

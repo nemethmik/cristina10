@@ -1,39 +1,50 @@
 import {html, LitElement, TemplateResult} from "lit"
-import {customElement, property, state} from "lit/decorators.js"
+import {customElement, state} from "lit/decorators.js"
 import {asyncReplace} from "lit/directives/async-replace.js"
-export const TTimerEvent = "timer"
-export type TTimerActions = 
-    {type: "Connected"} 
-  | {type: "Disconnected"} 
-function dispatchTimerEvent(el:HTMLElement,detail:TTimerActions):void {
-    el.dispatchEvent(new CustomEvent(TTimerEvent,{detail,composed:true,bubbles:true,cancelable:false}))
+import {makeAutoObservable,reaction,autorun} from "mobx"
+import {MobxReactionUpdate} from "@adobe/lit-mobx"
+// export const TTimerEvent = "timer"
+// export type TTimerActions = 
+//     {type: "Connected"} 
+//   | {type: "Disconnected"} 
+// function dispatchTimerEvent(el:HTMLElement,detail:TTimerActions):void {
+//     el.dispatchEvent(new CustomEvent(TTimerEvent,{detail,composed:true,bubbles:true,cancelable:false}))
+// }
+
+class TimerController {
+    private _run = true
+    get run():boolean {return this._run}
+    constructor() {
+        makeAutoObservable(this)
+    }
+    start():void {this._run = true}
+    stop():void {this._run = false}
 }
+export const timerController = new TimerController()
 
 @customElement("my-timer")
-class MyTimer extends LitElement {
-    @property({type:Boolean}) run = false
+class MyTimer extends MobxReactionUpdate(LitElement) {
+    timerController = timerController
     async *countUp() {
         const start = Date.now()
-        while(this.run) {
+        while(timerController.run) {
             const now = Date.now()
             yield now - start
             await new Promise(r => setTimeout(r,100))
         }        
     }
-    override attributeChangedCallback(name:string,old:string,value:string) {
-        super.attributeChangedCallback(name,old,value)
-        if(this.run) this.timer = this.countUp()
-    }
-    @state() private timer = this.countUp()
-    override render():TemplateResult {
-        return html`
-            <slot>Timer:</slot><span>${asyncReplace(this.timer)}</span><slot name=after></slot>
-        `
-    } 
+    @state() private timer = this.countUp() // timer has to be decorated as @state
+    override render():TemplateResult {return html`
+        <slot>Timer:</slot><span>${asyncReplace(this.timer)}</span><slot name=after></slot>
+    `} 
     override connectedCallback(): void {
+        // The side effect is that the countUp iterator generator has to be restarted.
+        // Both autorun and reaction are fine
+        // See https://mobx.js.org/reactions.html#reaction
+        //reaction(() => timerController.run,(run) => run ? this.timer = this.countUp() : undefined)
+        // See https://mobx.js.org/reactions.html#autorun 
+        autorun(() => timerController.run ? this.timer = this.countUp() : undefined)
         super.connectedCallback()
-        //dispatchTimerEvent(this,{type:"Connected"})
-        this.updateComplete.then(()=>dispatchTimerEvent(this,{type:"Connected"}))         
     }  
 }
 declare global {interface HTMLElementTagNameMap {'my-timer': MyTimer}}
