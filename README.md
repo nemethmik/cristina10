@@ -102,6 +102,109 @@ Slots can be named and even a web component can be sandwitched into another inst
     <my-timer slot=after run>Embedded timer:</my-timer>
   </my-timer>
 ```
+### Dispatching Registration Costom Events from the connectedCallback of Timers 
+Dispatching the event from *connectedCallback*  have to be done via the *updateCallback* Promise
+`this.updateComplete.then(()=>dispatchTimerEvent(this,{type:"Connected"}))` otherwise it will not work.
+  ```ts
+  export const TTimerEvent = "timer"
+  export type TTimerActions = 
+      {type: "Connected"} 
+    | {type: "Disconnected"} 
+  function dispatchTimerEvent(el:HTMLElement,detail:TTimerActions):void {
+      console.log(el,getParentElements(el),el.assignedSlot)
+      el.dispatchEvent(new CustomEvent(TTimerEvent,{detail,composed:true,bubbles:true,cancelable:false}))
+  }
+  ...
+  override connectedCallback(): void {
+    super.connectedCallback()
+    this.updateComplete.then(()=>dispatchTimerEvent(this,{type:"Connected"}))         
+  }  
+
+  //my-element.ts
+  import "./my-timer" 
+  import {TTimerEvent,TTimerActions} from "./my-timer" 
+  ...
+      <button @click=${async ()=> {
+          this.timers.forEach(t => this.runTimer ? t.removeAttribute("run") : t.setAttribute("run","true"))
+          this.runTimer = !this.runTimer
+        }}>
+        ${this.runTimer ? `Stop` : `Run`}
+      </button>
+  ...
+  timers:HTMLElement[] = []
+  registerTimer(timer: HTMLElement): void {this.timers.push(timer)}
+  unregisterTimer(timer: HTMLElement): void {this.timers.splice(this.timers.indexOf(timer), 1)} 
+  override connectedCallback():void {
+    this.addEventListener(TTimerEvent,((e:CustomEvent)=>{
+      const timer = e.composedPath()[0] as HTMLElement
+      const detail = e.detail as TTimerActions
+      switch(detail.type) {
+        case "Connected": this.registerTimer(timer); break
+        case "Disconnected": this.unregisterTimer(timer); break
+      }
+    }) as EventListener)
+    super.connectedCallback()
+  }
+  ```
+### Collecting Embedded Timer Components upon connectedCallback
+To improve the performance for registering the timers when the my-element component is consstructed. 
+Here again is terribly important to call querySlotElementAll within the *updateComplete* Promise
+  ```ts
+  //my-element.ts
+  @queryAssignedNodes("") defSlotNodes!:NodeListOf<HTMLElement>
+  querySlotElementAll(slotNodes:NodeListOf<HTMLElement>,name:string):HTMLElement[] {
+    const slotChildren = Array.from(slotNodes).filter(e=>e.querySelectorAll)
+    const selectedElements = slotChildren.map(e => Array.from(e.querySelectorAll(name)))
+    const arr = selectedElements.reduce((acc,val) => acc.concat(val),[]) as HTMLElement[]
+    //console.log("querySlotElementAll",arr)
+    return arr
+  }
+  override connectedCallback():void {
+    this.updateComplete.then(()=>{
+      const timers = this.querySlotElementAll(this.defSlotNodes,"my-timer")
+      timers.forEach(t => this.registerTimer(t))  
+    })
+    super.connectedCallback()
+  }
+  ```
+The idea came from [Shoelace](https://github.com/shoelace-style/shoelace) *tab-group* 
+where the *updateComplete* Promise is used to collect the tabs and tab panels:
+  ```ts
+    connectedCallback() {
+      super.connectedCallback()
+      ...
+      this.updateComplete.then(() => {
+        this.syncTabsAndPanels()
+      })
+    }
+    syncTabsAndPanels() {
+      this.tabs = this.getAllTabs()
+      this.panels = this.getAllPanels()
+      ...
+    }
+    getAllTabs(includeDisabled = false) {
+      const slot = this.shadowRoot!.querySelector('slot[name="nav"]') as HTMLSlotElement
+      return [...slot.assignedElements()].filter((el: any) => {
+        return includeDisabled
+          ? el.tagName.toLowerCase() === 'sl-tab'
+          : el.tagName.toLowerCase() === 'sl-tab' && !el.disabled
+      }) as SlTab[]
+    }
+    getAllPanels() {
+      const slot = this.body.querySelector('slot')!
+      return [...slot.assignedElements()].filter((el: any) => el.tagName.toLowerCase() === 'sl-tab-panel') as [SlTabPanel]
+    }
+    ```
+  - *updateComplete* is a getter in Lit ReactiveElement class, and what is interesting it is available in *connectedCallback*
+  ```ts
+    private __updatePromise!: Promise<boolean>
+    get updateComplete(): Promise<boolean> {
+      return this.getUpdateComplete()
+    }
+    protected getUpdateComplete(): Promise<boolean> {
+      return this.__updatePromise
+    }
+  ```
 
 ## tslitstrap
 
